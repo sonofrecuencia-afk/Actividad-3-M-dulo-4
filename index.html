@@ -1,0 +1,1846 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muévete, adapta y elige · Módulo 4 · Clase 3 · UMCE-SENADIS</title>
+<meta name="description" content="Actividad interactiva Clase 3, Módulo 4: exploración guiada de movimiento consciente.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   PALETA · coherente con Módulo 3 (índigo + teal), modernizada
+   Contrastes verificados (WCAG AA/AAA) sobre fondo blanco.
+   ========================================================= */
+:root{
+  --ink:#0f172a;            /* texto principal  (17:1) */
+  --ink-2:#334155;          /* texto secundario (10:1) */
+  --muted:#475569;          /* texto de apoyo   (7.5:1) */
+  --indigo-950:#1e1b4b;
+  --indigo-900:#312e81;
+  --indigo-800:#3730a3;     /* botones / acentos (10:1) */
+  --indigo-600:#4f46e5;
+  --indigo-100:#e0e7ff;
+  --indigo-50:#eef2ff;
+  --teal-800:#115e59;       /* texto teal (7.6:1) */
+  --teal-700:#0f766e;       /* acento teal (5.5:1) */
+  --teal-100:#ccfbf1;
+  --teal-50:#f0fdfa;
+  --green-800:#166534; --green-50:#f0fdf4; --green-200:#bbf7d0;
+  --amber-800:#92400e; --amber-50:#fffbeb; --amber-200:#fde68a;
+  --bg:#f4f6fb;
+  --card:#ffffff;
+  --border:#cbd5e1;
+  --border-soft:#e2e8f0;
+  --focus:#f59e0b;
+  --radius-lg:24px; --radius:16px; --radius-sm:12px;
+  --shadow:0 10px 30px rgba(15,23,42,.08);
+  --shadow-sm:0 2px 8px rgba(15,23,42,.06);
+  --font:'Plus Jakarta Sans','Segoe UI',Arial,Helvetica,Verdana,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;font-family:var(--font);font-size:1.0625rem;line-height:1.6;
+  color:var(--ink);background:var(--bg);min-height:100%;
+}
+img,svg{max-width:100%}
+button,input,textarea{font:inherit;color:inherit}
+p{margin:0 0 .85rem}
+p:last-child{margin-bottom:0}
+h1,h2,h3,h4{line-height:1.25;margin:0 0 .6rem;color:var(--indigo-950)}
+[hidden]{display:none!important}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+[tabindex="-1"]:focus{outline:none}
+
+/* ---------- ESTRUCTURA ---------- */
+.app{max-width:940px;margin:0 auto;padding:clamp(10px,2.5vw,24px);display:flex;flex-direction:column;gap:14px}
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:var(--card);border-radius:var(--radius);padding:10px 14px 10px 12px;
+  box-shadow:var(--shadow-sm);border-bottom:4px solid var(--indigo-800);
+}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-mark{width:40px;height:40px;flex-shrink:0}
+.brand-text{min-width:0}
+.eyebrow{margin:0;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-800)}
+.brand-title{margin:0;font-size:1.02rem;font-weight:800;color:var(--indigo-950);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{
+  display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:999px;
+  border:2px solid var(--border);background:#fff;font-weight:700;font-size:.9rem;color:var(--indigo-900);cursor:pointer;flex-shrink:0
+}
+.icon-btn:hover{border-color:var(--indigo-800);background:var(--indigo-50)}
+.icon-btn svg{width:20px;height:20px}
+.icon-btn .lbl{display:inline}
+
+/* ---------- PROGRESO ---------- */
+.progress{background:var(--card);border-radius:var(--radius);padding:12px 16px 14px;box-shadow:var(--shadow-sm)}
+.progress-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px}
+.progress-label{font-weight:800;font-size:.92rem;color:var(--indigo-900)}
+.progress-pct{font-weight:800;font-size:.92rem;color:var(--teal-800)}
+.bar{height:10px;border-radius:999px;background:var(--indigo-50);overflow:hidden;border:1px solid var(--indigo-100)}
+.bar-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--indigo-800),var(--teal-700));transition:width .5s ease}
+.steps{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:10px 0 0;padding:0}
+.steps li{display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;color:var(--muted);min-width:0}
+.steps .dot{
+  width:24px;height:24px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
+  border:2px solid var(--border);background:#fff;font-size:.75rem;font-weight:800;color:var(--muted)
+}
+.steps .txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.steps li.done .dot{background:var(--teal-700);border-color:var(--teal-700);color:#fff}
+.steps li.current .dot{background:var(--indigo-800);border-color:var(--indigo-800);color:#fff;box-shadow:0 0 0 4px var(--indigo-100)}
+.steps li.current{color:var(--indigo-950)}
+
+/* ---------- TARJETA DE PANTALLA ---------- */
+.screen{background:var(--card);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;animation:enter .45s ease both}
+.screen-head{
+  padding:clamp(18px,4vw,30px) clamp(18px,4vw,34px);
+  background:linear-gradient(120deg,var(--indigo-950),var(--indigo-800) 60%,var(--teal-700));
+  background-size:200% 200%;animation:flow 18s ease infinite;color:#fff;position:relative
+}
+.screen-head .tag{
+  display:inline-block;margin:0 0 10px;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.28);font-size:.78rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#fff
+}
+.screen-head h2{color:#fff;font-size:clamp(1.45rem,3.6vw,2rem);margin:0 0 .5rem}
+.screen-head p{color:#eef2ff;font-size:1.05rem;margin:0 0 .35rem}
+.screen-body{padding:clamp(18px,4vw,34px)}
+.step{animation:enter .4s ease both}
+
+@keyframes enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes flow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+/* ---------- INICIO ---------- */
+.hero{display:grid;grid-template-columns:1.25fr .9fr;gap:20px;align-items:center}
+.hero h1{color:#fff;font-size:clamp(1.8rem,5vw,2.6rem);margin:.2rem 0 .4rem}
+.hero .subtitle{font-size:clamp(1.05rem,2.4vw,1.25rem);font-weight:600;color:#ccfbf1;margin:0}
+.hero-art{width:100%;max-width:280px;justify-self:center}
+.panel{border-radius:var(--radius);padding:18px 20px;border:2px solid var(--border-soft);background:#fff;margin-bottom:16px}
+.panel h3{font-size:1.1rem;display:flex;align-items:center;gap:8px}
+.panel.soft{background:var(--indigo-50);border-color:var(--indigo-100)}
+.panel.teal{background:var(--teal-50);border-color:var(--teal-100);border-left:6px solid var(--teal-700)}
+.panel.teal h3{color:var(--teal-800)}
+.how{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.how li{display:flex;gap:10px;align-items:flex-start;font-size:1rem;color:var(--ink-2)}
+.how svg{width:22px;height:22px;flex-shrink:0;margin-top:2px;color:var(--teal-700)}
+
+/* Cadenas tipo "A → B → C" · filas centradas, cajas armónicas */
+.chain{--cols:4;--gx:34px;--gy:22px;list-style:none;padding:0;margin:1.4rem auto 0;display:flex;flex-wrap:wrap;justify-content:center;align-items:stretch;gap:var(--gy) var(--gx);max-width:calc(var(--cols) * 230px + (var(--cols) - 1) * var(--gx))}
+.chain.c3,.chain.c5{--cols:3}
+.chain li{position:relative;display:flex;flex:0 0 calc((100% - (var(--cols) - 1) * var(--gx)) / var(--cols));min-width:0}
+.chain .pill{
+  position:relative;display:flex;align-items:center;justify-content:center;width:100%;min-height:60px;padding:14px 16px 12px;
+  border-radius:18px;background:#fff;border:2px solid var(--indigo-800);color:var(--indigo-900);box-shadow:0 3px 10px rgba(55,48,163,.08);
+  font-weight:800;font-size:.9rem;letter-spacing:.03em;line-height:1.3;text-align:center;text-wrap:balance;overflow-wrap:break-word;hyphens:none
+}
+.chain.big .pill{font-size:.98rem;min-height:66px}
+.chain .pill .n{
+  position:absolute;top:-13px;left:50%;transform:translateX(-50%);width:26px;height:26px;border-radius:50%;
+  background:var(--indigo-800);color:#fff;border:3px solid #fff;display:grid;place-items:center;font-size:.72rem;letter-spacing:0;line-height:1
+}
+.chain.teal .pill{border-color:var(--teal-700);color:var(--teal-800)}
+.chain.teal .pill .n{background:var(--teal-700)}
+.chain .arrow{position:absolute;left:100%;top:50%;width:var(--gx);transform:translateY(-50%);text-align:center;color:var(--teal-700);font-weight:800;font-size:1.15rem;line-height:1;pointer-events:none}
+.chain.c4 li:nth-child(4n) .arrow,.chain.c3 li:nth-child(3n) .arrow,.chain.c5 li:nth-child(3n) .arrow{visibility:hidden}
+@media (max-width:760px){
+  .chain{--gx:28px}
+  .chain.c3,.chain.c4,.chain.c5{--cols:2}
+  .chain.c4 li:nth-child(4n) .arrow,.chain.c3 li:nth-child(3n) .arrow,.chain.c5 li:nth-child(3n) .arrow{visibility:visible}
+  .chain.c3 li:nth-child(2n) .arrow,.chain.c4 li:nth-child(2n) .arrow,.chain.c5 li:nth-child(2n) .arrow{visibility:hidden}
+  .chain li:last-child:nth-child(odd) .arrow{visibility:hidden}
+}
+@media (max-width:520px){
+  .chain{--gx:24px;--gy:20px}
+  .chain .pill,.chain.big .pill{font-size:.8rem;letter-spacing:.01em;padding:14px 8px 10px;min-height:58px}
+}
+
+/* ---------- PREGUNTAS / OPCIONES ---------- */
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend{padding:0;margin:0 0 12px;font-size:clamp(1.12rem,2.6vw,1.3rem);font-weight:800;color:var(--indigo-950);line-height:1.35}
+.q-count{display:inline-block;font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-800);margin-bottom:6px}
+.options{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.options.list{grid-template-columns:1fr}
+.opt{position:relative;display:block;cursor:pointer}
+.opt input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.opt-body{
+  display:flex;align-items:center;gap:12px;min-height:54px;height:100%;padding:12px 14px;border-radius:var(--radius-sm);
+  border:2px solid var(--border);background:#fff;font-weight:600;line-height:1.4;transition:border-color .15s,background .15s,box-shadow .15s
+}
+.opt:hover .opt-body{border-color:var(--indigo-600);background:#f8faff}
+.radio{width:22px;height:22px;border-radius:50%;border:2px solid #64748b;flex-shrink:0;display:grid;place-items:center;background:#fff}
+.radio::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--indigo-800);transform:scale(0);transition:transform .15s}
+.opt input:checked + .opt-body{border-color:var(--indigo-800);background:var(--indigo-50);box-shadow:0 0 0 3px var(--indigo-100)}
+.opt input:checked + .opt-body .radio{border-color:var(--indigo-800)}
+.opt input:checked + .opt-body .radio::after{transform:scale(1)}
+.opt input:focus-visible + .opt-body{outline:3px solid var(--focus);outline-offset:2px}
+.opt input:disabled + .opt-body{cursor:default}
+.opt-ico{width:38px;height:38px;flex-shrink:0;border-radius:10px;background:var(--teal-50);color:var(--teal-800);display:grid;place-items:center}
+.opt-ico svg{width:26px;height:26px}
+.opt-main{display:flex;flex-direction:column;min-width:0}
+.opt-title{font-weight:800;color:var(--indigo-950)}
+.opt-desc{font-weight:500;color:var(--ink-2);font-size:.98rem}
+.tried{margin-left:auto;font-size:.75rem;font-weight:800;color:var(--teal-800);background:var(--teal-50);border:1px solid var(--teal-100);padding:2px 8px;border-radius:999px;white-space:nowrap}
+
+/* Tabla-lista de anclas */
+.anchor-head{display:grid;grid-template-columns:180px 1fr;gap:12px;padding:0 16px 6px 100px;font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.anchor-row .opt-body{display:grid;grid-template-columns:22px 38px 180px 1fr auto;gap:12px}
+
+.other-wrap{margin-top:10px}
+.field-label{display:block;font-weight:700;font-size:.95rem;color:var(--ink-2);margin-bottom:6px}
+.text-input,textarea{
+  width:100%;padding:12px 14px;border-radius:var(--radius-sm);border:2px solid var(--border);background:#fff;font-size:1rem;line-height:1.5
+}
+.text-input:focus,textarea:focus{border-color:var(--indigo-800);outline:3px solid var(--focus);outline-offset:1px}
+textarea{min-height:110px;resize:vertical}
+
+/* ---------- CALLOUTS / FEEDBACK ---------- */
+.callout{border-radius:var(--radius);padding:18px 20px;margin-top:18px;border:2px solid;animation:enter .35s ease both}
+.callout h3,.callout h4{display:flex;align-items:center;gap:8px;font-size:1.08rem;margin-bottom:.5rem}
+.callout svg.ci{width:24px;height:24px;flex-shrink:0}
+.callout.info{background:var(--teal-50);border-color:var(--teal-100);border-left:8px solid var(--teal-700)}
+.callout.info h3,.callout.info h4{color:var(--teal-800)}
+.callout.idea{background:var(--indigo-50);border-color:var(--indigo-100);border-left:8px solid var(--indigo-800)}
+.callout.idea h3,.callout.idea h4{color:var(--indigo-900)}
+.callout.ok{background:var(--green-50);border-color:var(--green-200);border-left:8px solid var(--green-800)}
+.callout.ok h4{color:var(--green-800)}
+.callout.warn{background:var(--amber-50);border-color:var(--amber-200);border-left:8px solid var(--amber-800)}
+.callout.warn h4{color:var(--amber-800)}
+.callout .status{display:inline-block;font-size:.78rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-bottom:8px}
+.callout.ok .status{background:#dcfce7;color:var(--green-800)}
+.callout.warn .status{background:#fef3c7;color:var(--amber-800)}
+.hl{background:#fff;border-radius:10px;padding:10px 12px;border:2px dashed var(--indigo-600)}
+
+.summary{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.summary .chip{background:#fff;border:1px solid var(--indigo-100);border-radius:999px;padding:6px 12px;font-size:.92rem;font-weight:600;color:var(--ink-2)}
+.summary .chip b{color:var(--indigo-900)}
+
+/* ---------- PRÁCTICA / TEMPORIZADOR ---------- */
+.practice{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.focus-card{display:flex;align-items:center;gap:14px;background:var(--teal-50);border:2px solid var(--teal-100);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px}
+.focus-card .opt-ico{width:52px;height:52px;background:#fff}
+.focus-card .opt-ico svg{width:34px;height:34px}
+.focus-card .k{font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-800);margin:0}
+.focus-card .t{font-size:1.2rem;font-weight:800;color:var(--indigo-950);margin:0}
+.focus-card .d{margin:0;color:var(--ink-2);font-weight:500}
+.timer{position:relative;width:min(220px,62vw);aspect-ratio:1;display:grid;place-items:center;margin:0 auto}
+.timer svg.ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.timer .track{fill:none;stroke:var(--indigo-50);stroke-width:10}
+.timer .prog{fill:none;stroke:url(#gradRing);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .25s linear}
+.timer .breath{position:absolute;inset:22%;border-radius:50%;background:radial-gradient(circle,var(--teal-100),rgba(204,251,241,0) 70%)}
+.timer.running .breath{animation:breathe 8s ease-in-out infinite}
+.timer .readout{position:relative;text-align:center}
+.timer .time{font-size:clamp(2.2rem,8vw,3rem);font-weight:800;color:var(--indigo-950);font-variant-numeric:tabular-nums;line-height:1}
+.timer .state{font-size:.85rem;font-weight:700;color:var(--muted);margin-top:4px}
+.timer.done .time{color:var(--teal-800)}
+@keyframes breathe{0%,100%{transform:scale(.75);opacity:.6}50%{transform:scale(1.12);opacity:1}}
+.timer-ctrl{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.timer-note{font-size:.92rem;color:var(--muted);text-align:center;margin-top:8px}
+
+/* ---------- SITUACIONES (Pantalla 4) ---------- */
+.quote{
+  position:relative;background:var(--indigo-50);border:2px solid var(--indigo-100);border-radius:20px;padding:18px 22px 18px 58px;
+  font-size:clamp(1.12rem,2.8vw,1.3rem);font-weight:700;color:var(--indigo-950);margin:0 0 18px
+}
+.quote svg{position:absolute;left:16px;top:18px;width:28px;height:28px;color:var(--indigo-600)}
+.opt .letter{width:30px;height:30px;border-radius:8px;background:var(--indigo-50);color:var(--indigo-900);font-weight:800;display:grid;place-items:center;flex-shrink:0}
+.opt.correct .opt-body,.opt.correct input:checked + .opt-body{border-color:var(--green-800);background:var(--green-50);box-shadow:none}
+.opt.correct .letter{background:var(--green-800);color:#fff}
+.opt.wrong .opt-body,.opt.wrong input:checked + .opt-body{border-color:var(--amber-800);background:var(--amber-50);box-shadow:none}
+.opt.wrong .letter{background:var(--amber-800);color:#fff}
+.opt .mark{margin-left:auto;font-size:.78rem;font-weight:800;white-space:nowrap;padding:2px 8px;border-radius:999px}
+.opt.correct .mark{background:#dcfce7;color:var(--green-800)}
+.opt.wrong .mark{background:#fef3c7;color:var(--amber-800)}
+details.more{margin-top:14px;border:2px solid var(--border-soft);border-radius:var(--radius);background:#fff}
+details.more summary{cursor:pointer;padding:14px 16px;font-weight:800;color:var(--indigo-900);min-height:44px;list-style-position:inside}
+details.more[open] summary{border-bottom:2px solid var(--border-soft)}
+details.more .inner{padding:14px 16px;display:grid;gap:12px}
+details.more .fb-item{font-size:.98rem;color:var(--ink-2)}
+details.more .fb-item b{color:var(--indigo-950);display:block;margin-bottom:2px}
+
+/* ---------- ESTRATEGIAS (Pantalla 5) ---------- */
+.strategies{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:8px 0 20px}
+.strat{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:var(--radius);background:#fff;border:2px solid var(--border-soft);box-shadow:var(--shadow-sm)}
+.strat .opt-ico{width:46px;height:46px}
+.strat .h4{margin:0 0 2px;font-size:.95rem;letter-spacing:.03em;color:var(--indigo-900)}
+.panel-title{font-size:1.1rem;display:flex;align-items:center;gap:8px;color:var(--indigo-950)}
+.panel.teal .panel-title{color:var(--teal-800)}
+.panel-title svg{width:24px;height:24px;flex-shrink:0}
+.opt-text{min-width:0}
+.quote p{margin:0}
+.strat p{margin:0;font-size:.98rem;color:var(--ink-2)}
+
+/* ---------- CIERRE ---------- */
+.result{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;padding:20px;border-radius:var(--radius);background:linear-gradient(135deg,var(--indigo-50),var(--teal-50));border:2px solid var(--indigo-100);margin-bottom:18px}
+.score-ring{position:relative;width:140px;height:140px}
+.score-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.score-ring .track{fill:none;stroke:#fff;stroke-width:12}
+.score-ring .prog{fill:none;stroke:url(#gradRing);stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset 1.2s ease}
+.score-ring .val{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.score-ring .num{font-size:2.2rem;font-weight:800;color:var(--indigo-950);line-height:1}
+.score-ring .of{font-size:.8rem;font-weight:700;color:var(--muted)}
+.result h3{font-size:1.25rem;margin-bottom:.3rem}
+.kpis{display:flex;flex-wrap:wrap;gap:8px;margin:.6rem 0}
+.kpi{background:#fff;border:1px solid var(--indigo-100);border-radius:999px;padding:6px 12px;font-size:.9rem;font-weight:700;color:var(--ink-2)}
+.kpi b{color:var(--teal-800)}
+.recap{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0}
+.recap div{background:#fff;border:1px solid var(--border-soft);border-radius:12px;padding:10px 12px}
+.recap dt{font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-800)}
+.recap dd{margin:2px 0 0;font-weight:600;color:var(--ink)}
+.closing-text p{font-size:1.06rem}
+.download{
+  display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;padding:20px;border-radius:var(--radius);
+  background:var(--indigo-950);color:#fff;margin-top:18px
+}
+.download p{color:#e0e7ff;margin:0 0 12px}
+.download svg.doc{width:64px;height:78px}
+.download .btn-row{margin-top:0}
+
+/* ---------- BOTONES ---------- */
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;align-items:center;margin-top:24px}
+.btn-row.center{justify-content:center}
+.btn-row.between{justify-content:space-between}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 26px;border-radius:999px;
+  border:2px solid transparent;font-weight:800;font-size:1.02rem;cursor:pointer;text-decoration:none;line-height:1.2;
+  transition:transform .15s,box-shadow .15s,background .15s,filter .15s
+}
+.btn svg{width:20px;height:20px;flex-shrink:0}
+.btn-primary{background:linear-gradient(135deg,var(--indigo-800),var(--indigo-900));color:#fff;box-shadow:0 6px 16px rgba(55,48,163,.3)}
+.btn-primary:not(:disabled):hover{transform:translateY(-2px);filter:brightness(1.12)}
+.btn-accent{background:linear-gradient(135deg,var(--teal-700),var(--teal-800));color:#fff;box-shadow:0 6px 16px rgba(15,118,110,.3)}
+.btn-accent:not(:disabled):hover{transform:translateY(-2px);filter:brightness(1.1)}
+.btn-ghost{background:#fff;color:var(--indigo-900);border-color:var(--indigo-800)}
+.btn-ghost:hover{background:var(--indigo-50)}
+.btn-light{background:#fff;color:var(--indigo-950)}
+.btn-light:hover{background:var(--teal-50)}
+.btn-outline-light{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
+.btn-outline-light:hover{background:rgba(255,255,255,.12)}
+.btn-sm{min-height:44px;padding:8px 18px;font-size:.95rem}
+.btn:disabled{background:#e2e8f0;color:#475569;box-shadow:none;cursor:not-allowed;border-color:#cbd5e1}
+.hint{font-size:.9rem;color:var(--muted);margin:10px 0 0;text-align:right}
+
+.footer{text-align:center;font-size:.82rem;font-weight:700;color:var(--muted);padding:4px 0 8px}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}
+  .hero-art{max-width:190px;grid-row:1}
+  .anchor-head{display:none}
+  .anchor-row .opt-body{grid-template-columns:22px 38px 1fr;row-gap:2px}
+  .anchor-row .opt-desc{grid-column:3}
+  .anchor-row .tried{grid-column:3;justify-self:start;margin-left:0}
+  .practice{grid-template-columns:1fr}
+  .strategies,.recap{grid-template-columns:1fr}
+  .result{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .result .kpis{justify-content:center}
+  .download{grid-template-columns:1fr;text-align:center;justify-items:center}
+  .download .btn-row{justify-content:center}
+  .steps .txt{display:none}
+  .steps li{justify-content:center}
+  .steps li.current .txt{display:none}
+}
+@media (max-width:520px){
+  body{font-size:1rem}
+  .icon-btn .lbl{display:none}
+  .icon-btn{padding:0 11px}
+  .btn-row{flex-direction:column-reverse;align-items:stretch}
+  .btn-row .btn{width:100%}
+  .btn-row.between{flex-direction:column-reverse}
+  .options{grid-template-columns:1fr}
+  .hint{text-align:center}
+  .opt .mark{position:absolute;top:-11px;right:12px;margin:0}
+  .quote{padding:16px 16px 16px 50px}
+  .quote svg{left:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+@media (forced-colors:active){
+  .opt input:checked + .opt-body{outline:3px solid Highlight}
+  .btn{border:2px solid ButtonText}
+}
+
+/* =========================================================
+   ACTIVIDAD 2 · componentes propios
+   ========================================================= */
+.steps{grid-template-columns:repeat(7,1fr)}
+.screen-head .tag{margin-bottom:8px}
+.screen-head h2{margin:0}
+
+/* Barra de tiempo lineal */
+.tbar{background:var(--indigo-50);border:2px solid var(--indigo-100);border-radius:14px;padding:10px 14px 12px;margin:0 0 16px}
+.tbar-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.tbar-label{display:flex;align-items:center;gap:6px;font-size:.9rem;font-weight:800;color:var(--indigo-900)}
+.tbar-label svg{width:18px;height:18px;flex-shrink:0}
+.tbar-time{font-variant-numeric:tabular-nums;font-weight:800;color:var(--indigo-950);font-size:1.05rem}
+.tbar-track{height:12px;border-radius:999px;background:#fff;border:1px solid var(--indigo-100);overflow:hidden}
+.tbar-fill{height:100%;width:100%;border-radius:999px;background:linear-gradient(90deg,var(--teal-700),var(--indigo-800));transition:width .22s linear}
+.tbar.low .tbar-fill{background:linear-gradient(90deg,#b45309,#d97706)}
+.tbar.low .tbar-time{color:var(--amber-800)}
+.tbar.over{background:var(--amber-50);border-color:var(--amber-200)}
+.tbar.over .tbar-label,.tbar.over .tbar-time{color:var(--amber-800)}
+.tbar.ok{background:var(--green-50);border-color:var(--green-200)}
+.tbar.ok .tbar-label,.tbar.ok .tbar-time{color:var(--green-800)}
+.tbar.ok .tbar-fill{background:var(--green-800)}
+.tbar.nolimit{background:#f8fafc;border-color:var(--border-soft)}
+.tbar.nolimit .tbar-track{display:none}
+.tbar.nolimit .tbar-top{margin:0}
+
+.timeout-note{margin-top:12px;padding:10px 14px;border-radius:12px;background:var(--amber-50);border:2px solid var(--amber-200);color:var(--amber-800);font-weight:700;font-size:.98rem}
+
+/* Práctica */
+.practice-card{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:22px;align-items:center;margin-bottom:16px}
+.instr{padding:18px 20px;border-radius:var(--radius);background:var(--teal-50);border:2px solid var(--teal-100);border-left:8px solid var(--teal-700)}
+.instr .lead{font-size:1.1rem;font-weight:700;color:var(--indigo-950)}
+.instr p{color:var(--ink-2)}
+.visual{display:grid;place-items:center;gap:6px}
+.visual svg.illus{width:100%;max-width:210px;height:auto}
+.practice-ctrl{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:-4px 0 6px}
+.practice-state{text-align:center;font-weight:700;color:var(--muted);font-size:.92rem;margin:6px 0 0;min-height:1.4em}
+.note-time{display:flex;gap:10px;align-items:flex-start;margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--indigo-50);border:2px solid var(--indigo-100);font-weight:600;color:var(--indigo-900)}
+.note-time svg{width:22px;height:22px;flex-shrink:0;margin-top:2px}
+
+/* Guía respiratoria */
+.guide{position:relative;width:190px;height:190px;display:grid;place-items:center}
+.guide .g-ring{position:absolute;inset:6px;border-radius:50%;border:2px dashed var(--teal-700);opacity:.45}
+.guide .g-orb{width:46%;height:46%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ccfbf1,#14b8a6 55%,#0f766e);box-shadow:0 10px 30px rgba(15,118,110,.3);transform:scale(.8);transition-property:transform;transition-timing-function:ease-in-out}
+.guide.in .g-orb{transform:scale(1.75)}
+.guide-label{font-size:1.15rem;font-weight:800;color:var(--teal-800);text-align:center;min-height:1.6em;margin:0}
+.switch{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:6px 14px 6px 8px;border-radius:999px;border:2px solid var(--border);background:#fff;font-weight:700;color:var(--indigo-900);cursor:pointer}
+.switch .knob{width:40px;height:24px;border-radius:999px;background:#cbd5e1;position:relative;flex-shrink:0;transition:background .2s}
+.switch .knob::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.switch[aria-pressed="true"]{border-color:var(--teal-700);background:var(--teal-50)}
+.switch[aria-pressed="true"] .knob{background:var(--teal-700)}
+.switch[aria-pressed="true"] .knob::after{transform:translateX(16px)}
+.switch-row{display:flex;justify-content:center;margin-bottom:12px}
+
+/* Pantalla 6 · matriz de variables */
+.matrix{border:2px solid var(--border-soft);border-radius:var(--radius);overflow:hidden}
+.matrix-head,.matrix-row{display:grid;grid-template-columns:170px 1fr;gap:12px;align-items:center;padding:12px 16px}
+.matrix-head{background:var(--indigo-950);color:#fff;font-size:.82rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.matrix-row + .matrix-row{border-top:2px solid var(--border-soft)}
+.matrix-row:nth-child(odd){background:#f8fafc}
+.var-name{font-weight:800;color:var(--indigo-950);display:flex;align-items:center;gap:8px}
+.var-name .opt-ico{width:34px;height:34px}
+.var-name .opt-ico svg{width:22px;height:22px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip-btn{min-height:44px;padding:8px 16px;border-radius:999px;border:2px solid var(--border);background:#fff;font-weight:700;font-size:.98rem;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-align:left;line-height:1.3}
+.chip-btn:hover{border-color:var(--indigo-600);background:#f8faff}
+.chip-btn[aria-pressed="true"]{background:var(--indigo-800);border-color:var(--indigo-800);color:#fff}
+.chip-btn[aria-pressed="true"]::before{content:"✓";font-weight:800}
+.sel-count{font-weight:700;color:var(--muted);font-size:.95rem;margin:10px 0 0}
+
+/* Recorrido de la combinación */
+.route{list-style:none;margin:0 0 16px;padding:0;display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;justify-content:center}
+.route li{display:flex;align-items:center;gap:8px}
+.route .stop{background:#fff;border:2px solid var(--teal-700);border-radius:14px;padding:8px 12px;display:flex;flex-direction:column;animation:enter .4s ease both}
+.route .stop small{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-800)}
+.route .stop b{color:var(--indigo-950);font-size:.98rem}
+.route .arrow{color:var(--teal-700);font-weight:800}
+
+/* Decisiones MANTENGO / AJUSTO / CAMBIO / DETENGO */
+.decisions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.dec-btn{min-height:64px;border-radius:var(--radius);border:2px solid var(--indigo-800);background:#fff;color:var(--indigo-900);font-weight:800;font-size:1rem;letter-spacing:.05em;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px}
+.dec-btn svg{width:24px;height:24px}
+.dec-btn:hover{background:var(--indigo-50)}
+.dec-btn[aria-pressed="true"]{background:var(--indigo-800);color:#fff}
+
+/* Pantalla 7 · tarjetas de posibilidades */
+.poss{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.poss-btn{width:100%;text-align:left;border-radius:var(--radius);border:2px solid var(--border);background:#fff;padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:6px;min-height:84px}
+.poss-btn:hover{border-color:var(--indigo-600)}
+.poss-btn .pt{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.03em;color:var(--indigo-950);font-size:.95rem}
+.poss-btn .pt .opt-ico{width:36px;height:36px}
+.poss-btn .pt .opt-ico svg{width:22px;height:22px}
+.poss-btn .pt .chev{margin-left:auto;font-size:.8rem;color:var(--muted);font-weight:800;white-space:nowrap}
+.poss-btn .pf{display:none;color:var(--teal-800);font-weight:700;background:var(--teal-50);border-radius:10px;padding:8px 12px}
+.poss-btn[aria-expanded="true"]{border-color:var(--teal-700);background:#fbfffe}
+.poss-btn[aria-expanded="true"] .pf{display:block;animation:enter .3s ease both}
+.poss-btn[aria-expanded="true"] .chev{color:var(--teal-800)}
+
+/* Preferencia de tiempo (inicio) */
+.time-pref .options{grid-template-columns:repeat(3,1fr)}
+.time-pref .opt-desc{font-size:.9rem}
+
+/* Pantalla de salida */
+.bye{text-align:center}
+.bye svg.wave-hand{width:120px;height:120px;margin:0 auto 6px;display:block}
+.bye .screen-head p{color:#e0e7ff}
+
+@media (max-width:760px){
+  .practice-card{grid-template-columns:1fr}
+  .visual{order:-1}
+  .visual svg.illus{max-width:170px}
+  .matrix-head{display:none}
+  .matrix-row{grid-template-columns:1fr;gap:8px}
+  .decisions{grid-template-columns:repeat(2,1fr)}
+  .time-pref .options{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .guide .g-orb,.guide.in .g-orb{transform:scale(1.2)!important}
+}
+
+@media (max-width:520px){
+  .download .btn-row{flex-direction:column}
+  .download p{text-align:left}
+}
+
+/* =========================================================
+   ACTIVIDAD 3 · componentes propios
+   ========================================================= */
+.steps{grid-template-columns:repeat(6,1fr)}
+.screen-head h2 .gt,.ff .gt{color:#5eead4}
+
+/* Sello FUNCIÓN > FORMA */
+.ff{display:inline-flex;align-items:center;gap:12px;padding:10px 24px;border-radius:999px;background:var(--indigo-950);color:#fff;font-weight:800;letter-spacing:.1em;font-size:1.1rem;margin:0}
+.ff .gt{font-size:1.3rem}
+.ff-wrap{display:flex;justify-content:center;margin:12px 0 4px}
+.ff.big{font-size:clamp(1.2rem,3.4vw,1.6rem);padding:14px 32px}
+
+/* Encabezado de parte (A / B / C) */
+.part{display:flex;gap:14px;align-items:center;padding:14px 16px;border-radius:var(--radius);background:linear-gradient(135deg,var(--indigo-50),var(--teal-50));border:2px solid var(--indigo-100);margin-bottom:16px}
+.part-l{width:46px;height:46px;border-radius:12px;background:var(--indigo-800);color:#fff;font-weight:800;font-size:1.35rem;display:grid;place-items:center;flex-shrink:0}
+.part-h{margin:0;font-weight:800;font-size:1.14rem;color:var(--indigo-950);line-height:1.3}
+.part-fn{margin:2px 0 0;color:var(--teal-800);font-weight:600}
+.lead-p{font-size:1.1rem;font-weight:700;color:var(--indigo-950)}
+.note{display:flex;gap:10px;align-items:flex-start;margin:12px 0 0;padding:10px 14px;border-radius:12px;background:#f8fafc;border:2px solid var(--border-soft);font-weight:600;color:var(--ink-2)}
+.note svg{width:22px;height:22px;flex-shrink:0;margin-top:2px;color:var(--teal-700)}
+.opt-sub{font-weight:500;color:var(--ink-2)}
+.opt-sub b{color:var(--indigo-950)}
+.focus-card{margin-bottom:16px}
+
+/* Barra de amplitud */
+.amp{display:grid;grid-template-columns:200px 1fr;gap:22px;align-items:center;padding:18px;border-radius:var(--radius);border:2px solid var(--border-soft);background:#fff}
+.amp svg{width:100%;max-width:200px;height:auto}
+.amp-read{font-size:1.15rem;font-weight:800;color:var(--indigo-950);margin:0 0 10px}
+.amp-read span{color:var(--teal-800)}
+.amp-ticks{display:flex;justify-content:space-between;font-size:.85rem;font-weight:700;color:var(--muted);margin-top:4px}
+input[type=range]{width:100%;height:44px;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:12px;border-radius:999px;background:linear-gradient(90deg,var(--teal-100),var(--indigo-100));border:1px solid var(--indigo-100)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;margin-top:-10px;border-radius:50%;background:var(--indigo-800);border:4px solid #fff;box-shadow:0 2px 8px rgba(15,23,42,.35)}
+input[type=range]::-moz-range-track{height:12px;border-radius:999px;background:linear-gradient(90deg,var(--teal-100),var(--indigo-100))}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--indigo-800);border:4px solid #fff;box-shadow:0 2px 8px rgba(15,23,42,.35)}
+input[type=range]:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+
+/* Barra de tensión */
+.tbar.tense .tbar-fill{background:linear-gradient(90deg,#d97706,#b45309)}
+.tbar.release .tbar-fill{background:linear-gradient(90deg,var(--teal-700),#5eead4)}
+.tension-phase{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.tension-phase span{padding:6px 14px;border-radius:999px;border:2px solid var(--border);font-weight:700;font-size:.92rem;color:var(--muted)}
+.tension-phase span.on{border-color:var(--indigo-800);background:var(--indigo-800);color:#fff}
+
+/* Guía rítmica */
+.rhythm{margin-top:16px;padding:16px 18px;border-radius:var(--radius);background:var(--teal-50);border:2px solid var(--teal-100)}
+.rhythm > p{font-weight:700;color:var(--indigo-950)}
+.rg{margin-top:8px}
+.rg-track{position:relative;height:60px;border-radius:999px;background:#fff;border:2px dashed var(--teal-700);margin:8px 0 12px}
+.rg-dot{position:absolute;top:50%;left:8px;width:42px;height:42px;margin-top:-21px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ccfbf1,#14b8a6 55%,#0f766e);box-shadow:0 6px 16px rgba(15,118,110,.35);transition-property:left;transition-timing-function:ease-in-out}
+.rg-dot.r{left:calc(100% - 50px)}
+.rg .chips{justify-content:center}
+
+/* Situación (Pantalla 5) */
+.situation{border-radius:var(--radius);border:2px solid var(--indigo-100);background:var(--indigo-50);padding:18px 20px;margin-bottom:16px}
+.situation .k{font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--teal-800);margin-bottom:6px}
+.situation .quote{background:#fff;margin:10px 0 0}
+.banner{border-radius:var(--radius);background:var(--indigo-950);color:#fff;padding:16px 20px;text-align:center;font-weight:700;font-size:1.12rem;margin:10px 0 16px}
+.banner b{color:#5eead4;letter-spacing:.06em}
+
+/* Cuadro de familias (Pantalla 6) */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:2px solid var(--border-soft)}
+.fam-table{width:100%;border-collapse:collapse}
+.fam-table th{background:var(--indigo-950);color:#fff;text-align:left;padding:12px 16px;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase}
+.fam-table td{padding:12px 16px;border-top:2px solid var(--border-soft);font-weight:600;vertical-align:top}
+.fam-table td:first-child{color:var(--teal-800);font-weight:800;width:42%}
+.fam-table tbody tr:nth-child(even) td{background:#f8fafc}
+.fb-quote{font-weight:800;color:var(--indigo-950);border-left:4px solid var(--teal-700);padding-left:12px;font-size:1.05rem}
+
+@media (max-width:760px){
+  .amp{grid-template-columns:1fr;justify-items:center}
+  .amp > div{width:100%}
+}
+@media (max-width:520px){
+  .fam-table th,.fam-table td{padding:10px 12px}
+  .part{padding:12px}
+  .part-l{width:40px;height:40px;font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="gradRing" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3730a3"/><stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+  <symbol id="i-cuerpo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2.3"/><path d="M12 7.5v5.5M7.5 10.5l4.5 2.5 4.5-2.5M8 19l4-6 4 6"/><path d="M3.5 21.5h17"/><circle cx="8" cy="19.2" r=".6" fill="currentColor"/><circle cx="16" cy="19.2" r=".6" fill="currentColor"/></symbol>
+  <symbol id="i-vista" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-sonido" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 9.5v5h3.5l4.5 4V5.5L7 9.5H3.5z"/><path d="M15 9.2a4 4 0 0 1 0 5.6M17.8 6.5a8 8 0 0 1 0 11"/></symbol>
+  <symbol id="i-tacto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13.5V5.2a1.6 1.6 0 0 1 3.2 0V11"/><path d="M11.2 10.5V3.8a1.6 1.6 0 0 1 3.2 0v6.9"/><path d="M14.4 10.8V5.6a1.6 1.6 0 0 1 3.2 0v6"/><path d="M17.6 11.5V9a1.6 1.6 0 0 1 3.2 0v5.5a7.5 7.5 0 0 1-7.5 7.5h-.8a6.5 6.5 0 0 1-5.3-2.8L3.6 15a1.7 1.7 0 0 1 2.7-2L8 15"/></symbol>
+  <symbol id="i-movimiento" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14.5" cy="4" r="2"/><path d="M12.5 21l.5-5-3-2.5 1.5-5"/><path d="M6.5 12l2-3.5 3-.5 2.5 3 3 1.5"/><path d="M13 16l3 1.5 1 3.5"/></symbol>
+  <symbol id="i-respiracion" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h15.5a3 3 0 1 1-3 3"/><path d="M3 16h7"/></symbol>
+  <symbol id="i-agua" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3h13L17 20.2a2 2 0 0 1-2 1.8H9a2 2 0 0 1-2-1.8L5.5 3z"/><path d="M6.5 9.5c2-1 4-1 5.5 0s3.5 1 5.5 0"/></symbol>
+  <symbol id="i-pasos" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.5c-1.7 0-3-1.9-3-4.7S5.1 6 7 6s3 2.7 3 5.8-1.3 4.7-3 4.7z"/><path d="M5.2 19.5h3.6"/><path d="M17 12.5c-1.7 0-3-1.9-3-4.7S15.1 2 17 2s3 2.7 3 5.8-1.3 4.7-3 4.7z"/><path d="M15.2 15.5h3.6"/></symbol>
+  <symbol id="i-ordenar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/><rect x="8" y="3" width="8" height="8" rx="1.5"/></symbol>
+  <symbol id="i-manos" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5s5.5 6 5.5 10a5.5 5.5 0 0 1-11 0c0-4 5.5-10 5.5-10z"/><path d="M9.5 13a2.5 2.5 0 0 0 2.5 2.5"/></symbol>
+  <symbol id="i-documento" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+  <symbol id="i-otra" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></symbol>
+  <symbol id="i-checkin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></symbol>
+  <symbol id="i-ancla" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.4"/><path d="M12 7.4V21M8 11h8"/><path d="M4 13.5h1.5a6.5 6.5 0 0 0 13 0H20"/></symbol>
+  <symbol id="i-accion" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10.2 9.2l2.3-1.7V17"/></symbol>
+  <symbol id="i-sinjuzgar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-12.3 7.6L3.5 21l1.3-4.8A8.5 8.5 0 1 1 21 12z"/><path d="M8.5 12h7"/></symbol>
+  <symbol id="i-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 9.5v5h3.5l4.5 4V5.5L7 9.5H3.5z"/><path d="M15 9.2a4 4 0 0 1 0 5.6M17.8 6.5a8 8 0 0 1 0 11"/></symbol>
+  <symbol id="i-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 9.5v5h3.5l4.5 4V5.5L7 9.5H3.5z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.8v14.4a1 1 0 0 0 1.5.9l11.3-7.2a1 1 0 0 0 0-1.7L8.5 3.9A1 1 0 0 0 7 4.8z" fill="currentColor"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.2"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-quote" viewBox="0 0 24 24"><path fill="currentColor" d="M4 18v-6.2C4 8.3 6 5.9 9.2 5l.7 1.7C8.1 7.4 7.1 8.8 7 10.6h3.2V18H4zm10 0v-6.2c0-3.5 2-5.9 5.2-6.8l.7 1.7c-1.8.7-2.8 2.1-2.9 3.9h3.2V18H14z"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-14 15-15-1 10-7 15-15 15z"/><path d="M5 19l7-7"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+</svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-aire" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h15.5a3 3 0 1 1-3 3"/><path d="M3 16h7"/></symbol>
+  <symbol id="i-ritmo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c2.5-6 5-6 7.5 0s5 6 7.5 0 3.5-4.5 5-3"/></symbol>
+  <symbol id="i-reloj" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2.5h5"/></symbol>
+  <symbol id="i-postura" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2.3"/><path d="M12 7.5v7M8 10.5h8M9.5 21l2.5-6.5 2.5 6.5"/></symbol>
+  <symbol id="i-atencion" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></symbol>
+  <symbol id="i-guia" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></symbol>
+  <symbol id="i-abdomen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3c-1 4-1 8 0 12M17 3c1 4 1 8 0 12"/><ellipse cx="12" cy="13" rx="4.5" ry="3.5"/><path d="M8 21c1-2 2.5-3 4-3s3 1 4 3"/></symbol>
+  <symbol id="i-salida" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14c3-5 6-5 9 0 3.5 5 7.5 5 11 0"/><path d="M18 9l3 5-5 1"/></symbol>
+  <symbol id="i-adapta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+  <symbol id="i-mantengo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-ajusto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+  <symbol id="i-cambio" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h14l-3-3M20 16H6l3 3"/></symbol>
+  <symbol id="i-detengo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="3"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2.5" fill="currentColor"/></symbol>
+  <symbol id="i-exit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4"/><path d="M15 16l4-4-4-4M19 12H9"/></symbol>
+</svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-apoyo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 3v18"/><circle cx="10" cy="5" r="2.2"/><path d="M10 8v6l-3 7M10 14l3 7M10 10l6-1.5 4 .5"/></symbol>
+  <symbol id="i-amplitud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.2"/><path d="M12 8v7l-3 6M12 15l3 6M4 5l8 5 8-5"/></symbol>
+  <symbol id="i-participa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="8" r="2.4"/><path d="M2.5 20c.6-4 2.8-6 5.5-6s4.9 2 5.5 6M14 14.5c.9-.4 1.9-.5 3-.5 2.4 0 4 1.7 4.5 5"/></symbol>
+  <symbol id="i-funcion" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <!-- ============ BARRA SUPERIOR ============ -->
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <rect width="40" height="40" rx="12" fill="#3730a3"/>
+        <circle cx="20" cy="11" r="3.4" fill="#ccfbf1"/>
+        <path d="M20 15v9l-4 8M20 24l4 8M11 13l9 5 9-5" fill="none" stroke="#99f6e4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="brand-text">
+        <p class="eyebrow">Módulo 4 · Clase 3 · UMCE-SENADIS</p>
+        <p class="brand-title">Muévete, adapta y elige</p>
+      </div>
+    </div>
+    <button type="button" class="icon-btn" id="btn-sound" aria-pressed="true">
+      <svg aria-hidden="true"><use href="#i-sound-on"/></svg><span class="lbl">Sonido</span>
+      <span class="sr-only" id="sound-state">activado</span>
+    </button>
+  </header>
+
+  <!-- ============ PROGRESO ============ -->
+  <nav class="progress" id="progress" aria-label="Progreso de la actividad" hidden>
+    <div class="progress-head">
+      <span class="progress-label" id="progress-label">Pantalla 1 de 6 · Observo</span>
+      <span class="progress-pct" id="progress-pct" aria-hidden="true">0%</span>
+    </div>
+    <div class="bar" id="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="progress-label">
+      <div class="bar-fill" id="bar-fill"></div>
+    </div>
+    <ol class="steps" id="steps">
+      <li><span class="dot">1</span><span class="txt">Observo</span></li>
+      <li><span class="dot">2</span><span class="txt">Exploro</span></li>
+      <li><span class="dot">3</span><span class="txt">Experimento</span></li>
+      <li><span class="dot">4</span><span class="txt">Reconozco</span></li>
+      <li><span class="dot">5</span><span class="txt">Adapto</span></li>
+      <li><span class="dot">6</span><span class="txt">Integro</span></li>
+    </ol>
+  </nav>
+
+  <main id="main">
+
+    <!-- ================= INICIO ================= -->
+    <section class="screen" id="screen-inicio" aria-labelledby="t-inicio">
+      <div class="screen-head">
+        <div class="hero">
+          <div>
+            <p class="tag">Actividad Clase 3</p>
+            <h1 id="t-inicio" tabindex="-1">Muévete, adapta y elige</h1>
+            <p class="subtitle">Exploración guiada de movimiento consciente</p>
+          </div>
+          <svg class="hero-art" viewBox="0 0 240 240" role="img" aria-label="Ilustración: tres personas exploran la misma función de apoyo de formas distintas: de pie, sentada y apoyada en una pared.">
+            <circle cx="120" cy="120" r="112" fill="#ffffff" fill-opacity=".07"/>
+            <circle cx="120" cy="120" r="88" fill="none" stroke="#99f6e4" stroke-opacity=".5" stroke-width="2" stroke-dasharray="3 9"/>
+            <path d="M28 176h184" stroke="#5eead4" stroke-width="4" stroke-linecap="round"/>
+            <!-- de pie -->
+            <circle cx="62" cy="86" r="10" fill="#ccfbf1"/>
+            <path d="M62 98v38M62 136l-9 38M62 136l9 38M46 106l16 8 16-8" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- sentada -->
+            <path d="M104 176v-34h30v34M104 142v-30" fill="none" stroke="#a5b4fc" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="121" cy="94" r="10" fill="#ccfbf1"/>
+            <path d="M121 106v30h20v38M106 116l15 7 15-7" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- con apoyo -->
+            <path d="M206 70v106" stroke="#a5b4fc" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="176" cy="86" r="10" fill="#ccfbf1"/>
+            <path d="M176 98v38M176 136l-8 38M176 136l8 38M176 110l28-4" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="62" cy="190" r="3" fill="#5eead4"/><circle cx="121" cy="190" r="3" fill="#5eead4"/><circle cx="176" cy="190" r="3" fill="#5eead4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="screen-body">
+        <div class="panel soft">
+          <h2 class="panel-title"><svg class="ci" aria-hidden="true" width="24" height="24" style="color:var(--indigo-800)"><use href="#i-flag"/></svg>Propósito para el participante</h2>
+          <p>En esta actividad explorarás distintas posibilidades de movimiento consciente y reconocerás cómo responde tu cuerpo.</p>
+          <p>No necesitas reproducir una postura, alcanzar una amplitud determinada ni permanecer quieto/a.</p>
+          <p>La invitación es explorar qué función buscas, encontrar una forma corporal posible y descubrir cómo adaptarla.</p>
+        </div>
+        <div class="panel">
+          <h2 class="panel-title">Tu recorrido</h2>
+          <ol class="chain big c3" aria-label="Tu recorrido">
+            <li><span class="pill"><span class="n" aria-hidden="true">1</span>OBSERVO</span><span class="arrow" aria-hidden="true">→</span></li>
+            <li><span class="pill"><span class="n" aria-hidden="true">2</span>EXPLORO</span><span class="arrow" aria-hidden="true">→</span></li>
+            <li><span class="pill"><span class="n" aria-hidden="true">3</span>EXPERIMENTO</span><span class="arrow" aria-hidden="true">→</span></li>
+            <li><span class="pill"><span class="n" aria-hidden="true">4</span>RECONOZCO</span><span class="arrow" aria-hidden="true">→</span></li>
+            <li><span class="pill"><span class="n" aria-hidden="true">5</span>ADAPTO</span><span class="arrow" aria-hidden="true">→</span></li>
+            <li><span class="pill"><span class="n" aria-hidden="true">6</span>ELIJO</span></li>
+          </ol>
+          <p style="text-align:center;margin-top:18px;font-weight:700;color:var(--ink-2)">Y una idea nos acompañará durante toda la actividad:</p>
+          <div class="ff-wrap"><p class="ff big">FUNCIÓN <span class="gt" aria-hidden="true">&gt;</span><span class="sr-only">mayor que</span> FORMA</p></div>
+        </div>
+        <div class="panel teal">
+          <h2 class="panel-title"><svg class="ci" aria-hidden="true" width="24" height="24"><use href="#i-info"/></svg>Cómo avanzar en esta actividad</h2>
+          <ul class="how">
+            <li><svg aria-hidden="true"><use href="#i-right"/></svg><span>Avanza a tu ritmo con los botones <b>Continuar</b> y <b>Siguiente</b>. La barra superior te muestra en qué pantalla estás.</span></li>
+            <li><svg aria-hidden="true"><use href="#i-reloj"/></svg><span>Algunas preguntas tienen una barra de tiempo para responder (15 a 20 segundos). Si el tiempo termina, podrás responder igualmente o continuar.</span></li>
+            <li><svg aria-hidden="true"><use href="#i-play"/></svg><span>Las prácticas de movimiento son opcionales: realízalas solo dentro de un rango que te resulte confortable. Puedes pausarlas o detenerlas.</span></li>
+            <li><svg aria-hidden="true"><use href="#i-download"/></svg><span>Al finalizar podrás descargar tu ficha de registro.</span></li>
+          </ul>
+        </div>
+        <div class="panel time-pref"><fieldset>
+          <legend class="panel-title" style="margin-bottom:10px"><svg class="ci" aria-hidden="true" width="24" height="24" style="color:var(--indigo-800)"><use href="#i-reloj"/></svg>Tiempo para responder</legend>
+          <div class="options">
+            <label class="opt"><input type="radio" name="timepref" value="normal" checked><span class="opt-body"><span class="radio" aria-hidden="true"></span><span class="opt-main"><span class="opt-title">Con barra de tiempo</span><span class="opt-desc">15 a 20 segundos por pregunta</span></span></span></label>
+            <label class="opt"><input type="radio" name="timepref" value="extendido"><span class="opt-body"><span class="radio" aria-hidden="true"></span><span class="opt-main"><span class="opt-title">Tiempo extendido</span><span class="opt-desc">El doble de tiempo por pregunta</span></span></span></label>
+            <label class="opt"><input type="radio" name="timepref" value="sin"><span class="opt-body"><span class="radio" aria-hidden="true"></span><span class="opt-main"><span class="opt-title">Sin límite de tiempo</span><span class="opt-desc">Responde sin barra de tiempo</span></span></span></label>
+          </div>
+        </fieldset></div>
+        <div class="btn-row center">
+          <button type="button" class="btn btn-accent" id="btn-start">Comenzar <svg aria-hidden="true"><use href="#i-right"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PANTALLAS (los pasos se generan desde los datos) ================= -->
+    <section class="screen" id="screen-p1" aria-labelledby="t-p1" hidden>
+      <div class="screen-head"><p class="tag">Pantalla 1 · Observo</p><h2 id="t-p1" tabindex="-1">Mi cuerpo, mi punto de partida</h2></div>
+      <div class="screen-body"></div>
+    </section>
+    <section class="screen" id="screen-p2" aria-labelledby="t-p2" hidden>
+      <div class="screen-head"><p class="tag">Pantalla 2 · Exploro</p><h2 id="t-p2" tabindex="-1">Apoyo y movilidad</h2></div>
+      <div class="screen-body"></div>
+    </section>
+    <section class="screen" id="screen-p3" aria-labelledby="t-p3" hidden>
+      <div class="screen-head"><p class="tag">Pantalla 3 · Experimento</p><h2 id="t-p3" tabindex="-1">Extensión y equilibrio</h2></div>
+      <div class="screen-body"></div>
+    </section>
+    <section class="screen" id="screen-p4" aria-labelledby="t-p4" hidden>
+      <div class="screen-head"><p class="tag">Pantalla 4 · Reconozco</p><h2 id="t-p4" tabindex="-1">Tensión, ritmo y pausa</h2></div>
+      <div class="screen-body"></div>
+    </section>
+    <section class="screen" id="screen-p5" aria-labelledby="t-p5" hidden>
+      <div class="screen-head"><p class="tag">Pantalla 5 · Adapto</p><h2 id="t-p5" tabindex="-1">FUNCIÓN <span class="gt" aria-hidden="true">&gt;</span><span class="sr-only">mayor que</span> FORMA</h2></div>
+      <div class="screen-body"></div>
+    </section>
+    <section class="screen" id="screen-p6" aria-labelledby="t-p6" hidden>
+      <div class="screen-head"><p class="tag">Pantalla 6 · Integro</p><h2 id="t-p6" tabindex="-1">Mi repertorio corporal</h2></div>
+      <div class="screen-body"></div>
+    </section>
+
+    <!-- ================= CIERRE ================= -->
+    <section class="screen" id="screen-cierre" aria-labelledby="t-cierre" hidden>
+      <div class="screen-head">
+        <p class="tag">Cierre</p>
+        <h2 id="t-cierre" tabindex="-1">Muévete, adapta y elige</h2>
+      </div>
+      <div class="screen-body">
+        <div class="result">
+          <div class="score-ring" aria-hidden="true">
+            <svg viewBox="0 0 140 140"><circle class="track" cx="70" cy="70" r="60"/><circle class="prog" id="score-prog" cx="70" cy="70" r="60" stroke-dasharray="376.99" stroke-dashoffset="376.99"/></svg>
+            <div class="val"><div><div class="num" id="score-num">0</div><div class="of">de 7</div></div></div>
+          </div>
+          <div>
+            <h3>Puntaje obtenido: <span id="score-text">0 de 7</span></h3>
+            <p id="score-msg"></p>
+            <div class="kpis">
+              <span class="kpi">Funciones exploradas: <b>7 de 7</b></span>
+              <span class="kpi">Respuestas correctas: <b id="kpi-ok">0 de 7</b></span>
+              <span class="kpi">Prácticas realizadas: <b id="kpi-prac">0 de 3</b></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel closing-text">
+          <p>Durante esta actividad exploramos distintas maneras de mover, apoyar, extender, equilibrar, tensar, liberar, repetir y pausar.</p>
+          <p>Pero nuestro propósito no fue aprender siete ejercicios.</p>
+          <p>Buscábamos comprender algo más importante: nuestros cuerpos no necesitan responder de la misma manera para participar de una experiencia de regulación.</p>
+          <p>Una estrategia puede realizarse sentado/a, de pie, con apoyo, con una amplitud pequeña, mediante otro movimiento o a un ritmo diferente. También puede observarse, adaptarse, cambiarse o detenerse.</p>
+          <p>Por eso:</p>
+          <p class="hl" style="text-align:center"><strong>LA POSTURA NO ES LA META. LA EXPERIENCIA ES LA META.</strong></p>
+          <p style="text-align:center;margin:10px 0 4px">y</p>
+          <div class="ff-wrap"><p class="ff big">FUNCIÓN <span class="gt" aria-hidden="true">&gt;</span><span class="sr-only">mayor que</span> FORMA</p></div>
+        </div>
+
+        <div class="panel">
+          <h3>Mi recorrido</h3>
+          <p style="color:var(--muted);font-size:.95rem">Úsalo como referencia para completar tu ficha de registro.</p>
+          <dl class="recap" id="recap"></dl>
+        </div>
+
+        <div class="download">
+          <svg class="doc" viewBox="0 0 64 78" aria-hidden="true" focusable="false">
+            <path d="M6 2h36l20 20v50a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V6a4 4 0 0 1 4-4z" fill="#fff"/>
+            <path d="M42 2v16a4 4 0 0 0 4 4h16" fill="#ccfbf1"/>
+            <circle cx="30" cy="34" r="4" fill="#3730a3"/>
+            <path d="M30 39v10l-5 9M30 49l5 9M20 42l10 4 10-4" fill="none" stroke="#3730a3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="12" y="64" width="34" height="4" rx="2" fill="#99f6e4"/>
+          </svg>
+          <div>
+            <p>Para finalizar esta actividad, descarga la guía de registro y continúa construyendo tu repertorio personal de estrategias de movimiento consciente. En ella podrás registrar cómo respondió tu cuerpo frente a las distintas funciones que exploraste, reconocer qué posibilidades podrían resultar accesibles para ti y pensar cómo podrías modificar la posición, los apoyos, la amplitud, el ritmo, la duración o la forma de participar. Recuerda: la postura no es la meta. La experiencia es la meta. Una misma función puede explorarse de diferentes maneras.</p>
+            <div class="btn-row" style="justify-content:flex-start">
+              <a class="btn btn-light" id="btn-descargar" target="_blank" rel="noopener"
+                 href="https://drive.google.com/uc?export=download&amp;id=1dvIaHEWjas2pAdPdCNdDHSkKjE0t2Hai">
+                <svg aria-hidden="true"><use href="#i-download"/></svg>Descargar ficha 3 (.docx)<span class="sr-only"> (se abre en una nueva pestaña)</span>
+              </a>
+              <a class="btn btn-outline-light btn-sm" target="_blank" rel="noopener"
+                 href="https://docs.google.com/document/d/1dvIaHEWjas2pAdPdCNdDHSkKjE0t2Hai/edit?usp=drive_link&amp;ouid=107456956016402398556&amp;rtpof=true&amp;sd=true">
+                <svg aria-hidden="true"><use href="#i-external"/></svg>Abrir en Google Docs<span class="sr-only"> (se abre en una nueva pestaña)</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-row center">
+          <button type="button" class="btn btn-ghost" id="btn-retry"><svg aria-hidden="true"><use href="#i-reset"/></svg>Volver a intentar</button>
+          <button type="button" class="btn btn-primary" id="btn-exit"><svg aria-hidden="true"><use href="#i-exit"/></svg>Salir de la actividad</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SALIDA ================= -->
+    <section class="screen bye" id="screen-salida" aria-labelledby="t-salida" hidden>
+      <div class="screen-head">
+        <svg class="wave-hand" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+          <circle cx="60" cy="60" r="56" fill="#ffffff" fill-opacity=".1"/>
+          <circle cx="60" cy="34" r="10" fill="#ccfbf1"/>
+          <path d="M60 46v26l-10 22M60 72l10 22M36 40l24 14 24-14" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M26 100h68" stroke="#5eead4" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <h2 id="t-salida" tabindex="-1">¡Hasta pronto!</h2>
+        <p style="margin-top:.6rem">Has finalizado la actividad «Muévete, adapta y elige».</p>
+        <p>Ya puedes cerrar esta ventana y continuar con tu módulo en la plataforma.</p>
+      </div>
+      <div class="screen-body">
+        <div class="btn-row center" style="margin-top:0">
+          <button type="button" class="btn btn-ghost" id="btn-restart"><svg aria-hidden="true"><use href="#i-reset"/></svg>Volver a empezar</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <p class="footer">UMCE-SENADIS · Habilidades socioemocionales en educación inclusiva · Módulo 4</p>
+  <div id="sr-live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  /* =========================================================
+     CONTENIDO (textos del cliente, sin modificaciones)
+     ========================================================= */
+  var PARTS = {
+    p2A: { L: 'A', h: 'Apoyo y enraizamiento',           fn: 'explorar estabilidad y puntos de apoyo.' },
+    p2B: { L: 'B', h: 'Movilidad suave',                 fn: 'explorar posibilidades de movimiento.' },
+    p3A: { L: 'A', h: 'Extensión y apertura',            fn: 'explorar espacio y amplitud.' },
+    p3B: { L: 'B', h: 'Equilibrio adaptado',             fn: 'explorar estabilidad y transferencia de peso.' },
+    p4A: { L: 'A', h: 'Tensión y liberación',            fn: 'reconocer diferencias corporales.' },
+    p4B: { L: 'B', h: 'Movimiento rítmico o repetitivo', fn: 'explorar ritmo y repetición como posibilidad regulatoria.' },
+    p4C: { L: 'C', h: 'Pausa y descanso corporal',       fn: 'explorar una forma accesible de pausa.' }
+  };
+
+  var STEPS = [
+    /* ---------- Pantalla 1 · Observo ---------- */
+    { id: 'p1-obs', screen: 'p1', type: 'intro',
+      instr: ['Antes de comenzar, observa durante unos instantes cómo se encuentra tu cuerpo.', 'No necesitas cambiar tu posición. Solo observa.'] },
+    { id: 'p1-q', screen: 'p1', type: 'choice', t: 15,
+      legend: '¿Qué parece necesitar principalmente mi cuerpo en este momento?',
+      opts: ['Movimiento', 'Apoyo o estabilidad', 'Cambiar de posición', 'Estirarse o ampliar espacio', 'Disminuir el movimiento', 'Descansar', 'No logro identificarlo', 'Otra posibilidad'],
+      callout: { cls: 'info', ico: 'i-leaf', h: 'Antes de continuar', ps: [
+        'Este es solamente tu punto de partida.',
+        'Durante la actividad podrás explorar distintas funciones corporales y reconocer cuáles quieres mantener, adaptar, cambiar o detener.'] } },
+
+    /* ---------- Pantalla 2 · Exploro ---------- */
+    { id: 'p2-a1', screen: 'p2', type: 'choice', lead: 'Comenzaremos explorando dos posibilidades.', part: 'p2A', t: 15,
+      legend: 'Elige una forma que te resulte accesible:',
+      opts: [{ t: 'De pie', d: 'reconoce el contacto de los pies con el suelo y, si quieres, desplaza suavemente el peso.' },
+             { t: 'Sentado/a', d: 'reconoce el apoyo del cuerpo en la silla y los puntos de contacto disponibles.' },
+             { t: 'Con apoyo', d: 'utiliza una pared, mesa, respaldo u otro soporte disponible.' }],
+      note: 'No necesitas mantener una postura específica.' },
+    { id: 'p2-a2', screen: 'p2', type: 'choice', part: 'p2A', focus: { from: 'p2-a1', k: 'Tu forma' }, t: 0,
+      legend: '¿Cómo crees que será esta experiencia?',
+      opts: ['Confortable', 'Neutra', 'Incómoda', 'Necesité modificarla', 'Preferí otra posición'],
+      callout: { cls: 'idea', ico: 'i-bulb', h: 'Retroalimentación', ps: [
+        'Una misma función puede explorarse desde diferentes posiciones. Adaptar la forma es parte de la estrategia, no una falla en su ejecución.'] } },
+    { id: 'p2-b1', screen: 'p2', type: 'choice', part: 'p2B', t: 0,
+      legend: 'Elige una zona:', opts: ['Manos', 'Hombros', 'Brazos', 'Tronco', 'Otra'],
+      practice: { instr: 'Realiza un movimiento suave dentro de un rango que resulte confortable.', sec: 20 } },
+    { id: 'p2-q', screen: 'p2', type: 'quiz', pre: 'Ahora piensa:', t: 15,
+      q: '¿Qué pueden tener en común los movimientos realizados de pie, sentado/a o utilizando un apoyo?',
+      opts: ['Deben reproducir exactamente la misma postura.', 'Pueden explorar una función similar mediante formas corporales diferentes.',
+             'Una forma es correcta y las demás son versiones incompletas.'], ok: 1,
+      fb: ['Cuando priorizamos la función, podemos modificar la posición, los apoyos y el rango de movimiento. Las adaptaciones son diferentes formas de acceso, no versiones inferiores.'] },
+
+    /* ---------- Pantalla 3 · Experimento ---------- */
+    { id: 'p3-a1', screen: 'p3', type: 'choice', lead: 'Ahora exploraremos otras dos funciones.', part: 'p3A', t: 15,
+      legend: 'Elige una posibilidad:',
+      opts: ['Llevar los brazos hacia arriba.', 'Abrir los brazos hacia los lados.', 'Extenderlos hacia delante.',
+             'Realizar un pequeño movimiento de extensión del tronco.', 'Elegir otra forma confortable.'] },
+    { id: 'p3-a2', screen: 'p3', type: 'amp', part: 'p3A', t: 15,
+      legend: 'Puedes utilizar una amplitud pequeña, media o aquella que tú elijas.' },
+    { id: 'p3-a3', screen: 'p3', type: 'quiz', part: 'p3A', t: 15, noLetters: true,
+      q: '¿Necesitas llegar al máximo de amplitud?', opts: ['Sí.', 'No.'], ok: 1,
+      fb: ['No necesitamos alcanzar una posición final. Un rango parcial también permite explorar la función. La amplitud se adapta a la persona.'] },
+    { id: 'p3-b1', screen: 'p3', type: 'choice', part: 'p3B', t: 15,
+      legend: 'Elige una posibilidad:',
+      opts: ['Ambos pies apoyados.', 'Un pie ligeramente adelantado.', 'Punta de un pie en contacto con el suelo.',
+             'De pie utilizando una pared, silla u otro apoyo.', 'Sentado/a explorando transferencia de peso.'] },
+    { id: 'p3-b2', screen: 'p3', type: 'quiz', part: 'p3B', t: 20,
+      q: '¿Cuál es la versión correcta?',
+      opts: ['La que requiere menos apoyo.', 'La que se parece más a una postura tradicional.',
+             'La que permite explorar la función de manera accesible para esa persona.', 'La que puede mantenerse durante más tiempo.'], ok: 2,
+      fb: ['Menos apoyo, mayor dificultad o mayor duración no significan mejor ejecución.'],
+      after: '<div class="ff-wrap"><p class="ff">FUNCIÓN <span class="gt" aria-hidden="true">&gt;</span><span class="sr-only">mayor que</span> FORMA</p></div>' +
+             '<p style="text-align:center;margin-top:10px"><strong>Buscamos una manera posible de explorar la estabilidad.</strong></p>' },
+
+    /* ---------- Pantalla 4 · Reconozco ---------- */
+    { id: 'p4-a1', screen: 'p4', type: 'choice', lead: 'Exploraremos tres posibilidades más. No necesitas sentir un resultado específico.', part: 'p4A', t: 15,
+      legend: 'Elige una zona:', opts: ['Manos', 'Hombros', 'Pies', 'Brazos'] },
+    { id: 'p4-a2', screen: 'p4', type: 'tension', part: 'p4A', focus: { from: 'p4-a1', k: 'Tu zona' }, sec: 15,
+      instr: 'Si resulta confortable, genera una tensión suave durante unos segundos y luego deja de producirla voluntariamente.' },
+    { id: 'p4-a3', screen: 'p4', type: 'choice', part: 'p4A', t: 15,
+      legend: '¿Qué observaste?',
+      opts: ['Reconocí una diferencia clara.', 'Reconocí una diferencia pequeña.', 'No observé una diferencia particular.', 'Me resultó incómodo.', 'Preferí detenerme.'],
+      callout: { cls: 'idea', ico: 'i-bulb', h: 'Para recordar', ps: [
+        'No buscamos conseguir relajación. Buscamos reconocer qué ocurrió. Incluso no percibir un cambio entrega información.'] } },
+    { id: 'p4-b1', screen: 'p4', type: 'choice', part: 'p4B', t: 15,
+      legend: 'Elige una posibilidad:',
+      opts: ['Balanceo suave', 'Caminar', 'Movimiento de brazos', 'Movimiento de manos', 'Transferencia repetida de peso', 'Otro movimiento confortable'],
+      rhythm: 'Puedes realizarlo más lentamente, seguir tu propio ritmo o utilizar una guía.' },
+    { id: 'p4-b2', screen: 'p4', type: 'quiz', part: 'p4B', pre: 'Piensa', t: 15,
+      q: '¿Necesitamos detener automáticamente un movimiento repetitivo para favorecer la autorregulación?',
+      opts: ['Sí, porque la regulación requiere quietud.', 'Sí, porque mindfulness exige inmovilidad.',
+             'No. Primero necesitamos considerar qué función puede estar cumpliendo ese movimiento.'], ok: 2,
+      fb: ['La regulación no requiere necesariamente quietud. Un movimiento repetitivo puede cumplir una función y necesitamos comprenderla antes de intervenir.'] },
+    { id: 'p4-c1', screen: 'p4', type: 'choice', part: 'p4C', t: 15,
+      legend: 'Puedes elegir:',
+      opts: ['Sentado/a', 'Apoyado/a en una pared', 'Reclinado/a', 'En el suelo', 'Apoyado/a sobre una mesa', 'Una pausa con movimiento', 'Otra posibilidad'],
+      note: 'Puedes mantener los ojos abiertos y cambiar de posición.' },
+    { id: 'p4-c2', screen: 'p4', type: 'quiz', part: 'p4C', t: 20,
+      q: 'Para que una pausa corporal sea válida…',
+      opts: ['Debemos permanecer completamente quietos.', 'Debemos cerrar los ojos.', 'Debemos acostarnos.',
+             'La forma puede adaptarse según las necesidades y posibilidades de la persona.'], ok: 3,
+      fb: ['Una pausa no tiene una única forma. La función puede mantenerse mientras la forma cambia.'] },
+
+    /* ---------- Pantalla 5 · Adapto ---------- */
+    { id: 'p5-sit', screen: 'p5', type: 'quiz', lead: 'Ahora llevaremos a la práctica la idea central de esta actividad.', situation: true, t: 15,
+      q: '¿Qué harías?',
+      opts: ['Reducir el tiempo, pero mantener la misma postura.', 'Explicar nuevamente cómo realizar correctamente el ejercicio.',
+             'Ofrecer otras formas de explorar estabilidad y transferencia de peso.', 'Eliminar completamente la función de la actividad.'], ok: 2,
+      fb: ['Si una forma no resulta accesible, podemos modificar la forma manteniendo la función.'] },
+    { id: 'p5-adapt', screen: 'p5', type: 'matrix', t: 20 },
+    { id: 'p5-dec', screen: 'p5', type: 'decide' },
+
+    /* ---------- Pantalla 6 · Integro ---------- */
+    { id: 'p6-tab', screen: 'p6', type: 'table', t: 20 },
+    { id: 'p6-q', screen: 'p6', type: 'quiz', pre: 'Ahora piensa en tu experiencia.', t: 20, final: true,
+      q: '¿Cuál de estas ideas representa mejor lo aprendido?',
+      opts: ['Una estrategia corporal funciona mejor cuando conseguimos reproducir correctamente su postura.',
+             'Las adaptaciones son necesarias solamente cuando una persona no puede realizar la propuesta original.',
+             'Una misma función puede explorarse mediante diferentes formas corporales, apoyos, amplitudes y maneras de participar.',
+             'La regulación corporal requiere disminuir progresivamente el movimiento.'], ok: 2,
+      fb: ['La forma puede cambiar sin que necesariamente cambie aquello que queremos favorecer.',
+           'Por eso, en lugar de comenzar preguntando:',
+           { quote: '“¿Puede esta persona hacer esta postura?”' },
+           'podemos preguntarnos:',
+           { quote: '“¿Qué función queremos favorecer y de cuántas maneras podemos acceder a ella?”' }] }
+  ];
+
+  var VARS = [
+    { k: 'Posición',      i: 'i-postura',   o: ['Sentado/a', 'De pie', 'Reclinado/a', 'Otra'] },
+    { k: 'Apoyo',         i: 'i-apoyo',     o: ['Sin apoyo adicional', 'Pared', 'Silla', 'Mesa', 'Otro apoyo disponible'] },
+    { k: 'Amplitud',      i: 'i-amplitud',  o: ['Pequeña', 'Media', 'Elegida libremente'] },
+    { k: 'Velocidad',     i: 'i-ritmo',     o: ['Lenta', 'Propia', 'Guiada'] },
+    { k: 'Duración',      i: 'i-reloj',     o: ['Breve', 'Más prolongada', 'Libre'] },
+    { k: 'Participación', i: 'i-participa', o: ['Realizar', 'Adaptar', 'Observar', 'Elegir otra posibilidad', 'No participar'] }
+  ];
+
+  var DECS = [
+    { k: 'MANTENGO', i: 'i-mantengo', fb: 'Esta forma resulta pertinente.' },
+    { k: 'AJUSTO',   i: 'i-ajusto',   fb: 'Quiero modificar alguna característica.' },
+    { k: 'CAMBIO',   i: 'i-cambio',   fb: 'Prefiero otra forma de explorar la misma función.' },
+    { k: 'DETENGO',  i: 'i-detengo',  fb: 'La propuesta no resulta adecuada en este momento.' }
+  ];
+
+  var FAM = [['Estabilidad', 'Apoyo y enraizamiento'], ['Movimiento', 'Movilidad suave'], ['Espacio / amplitud', 'Extensión y apertura'],
+             ['Estabilidad dinámica', 'Equilibrio adaptado'], ['Reconocimiento corporal', 'Tensión y liberación'],
+             ['Ritmo', 'Movimiento rítmico o repetitivo'], ['Pausa', 'Pausa y descanso corporal']];
+
+  var QUIZ_IDS = STEPS.filter(function (s) { return s.type === 'quiz'; }).map(function (s) { return s.id; });
+
+  function scoreMessage(n) {
+    if (n === QUIZ_IDS.length) return 'Reconociste en todas las preguntas que una misma función puede explorarse de diferentes formas. La postura no es la meta: la experiencia es la meta.';
+    if (n > 0) return 'Reconociste la función por sobre la forma en ' + n + ' de las ' + QUIZ_IDS.length + ' preguntas. Revisar las retroalimentaciones te ayudará a seguir ampliando tus posibilidades.';
+    return 'Esta vez la forma pesó más que la función, y notarlo también es información. Puedes volver a intentarlo y revisar cada retroalimentación con calma.';
+  }
+
+  /* =========================================================
+     UTILIDADES
+     ========================================================= */
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function icon(id) { return '<svg aria-hidden="true" focusable="false"><use href="#' + id + '"/></svg>'; }
+  var liveTimer = null;
+  function announce(msg) {
+    var el = $('#sr-live');
+    el.textContent = '';
+    clearTimeout(liveTimer);
+    liveTimer = setTimeout(function () { el.textContent = msg; }, 80);
+  }
+  function isOther(text) { return /^(Otra|Otro|Elegir otra)/.test(text); }
+  function fmt(ms) { var s = Math.ceil(ms / 1000); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+
+  /* =========================================================
+     SONIDO · Web Audio API + voz opcional (guía verbal)
+     ========================================================= */
+  var Sound = (function () {
+    var ctx = null, on = true, KEY = 'umce-senadis-m4-a3-sound';
+    try { on = localStorage.getItem(KEY) !== 'off'; } catch (e) {}
+    function ac() {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      if (!ctx) ctx = new AC();
+      if (ctx.state === 'suspended') ctx.resume();
+      return ctx;
+    }
+    function tone(freq, start, dur, o) {
+      o = o || {};
+      var c = ac(); if (!c) return;
+      var t = c.currentTime + start;
+      var osc = c.createOscillator(), g = c.createGain();
+      osc.type = o.type || 'sine';
+      osc.frequency.setValueAtTime(freq, t);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(o.vol || 0.07, t + (o.attack || 0.015));
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      osc.connect(g); g.connect(c.destination);
+      osc.start(t); osc.stop(t + dur + 0.05);
+    }
+    var fx = {
+      select:  function () { tone(880, 0, 0.12, { vol: 0.035 }); },
+      next:    function () { tone(587.33, 0, 0.14, { vol: 0.035 }); tone(783.99, 0.07, 0.2, { vol: 0.035 }); },
+      ok:      function () { tone(659.25, 0, 0.25, { vol: 0.05 }); tone(987.77, 0.08, 0.35, { vol: 0.045 }); },
+      correct: function () { tone(523.25, 0, 0.4, { vol: 0.07 }); tone(659.25, 0.1, 0.4, { vol: 0.07 }); tone(783.99, 0.2, 0.7, { vol: 0.07 }); },
+      gentle:  function () { tone(392, 0, 0.4, { type: 'triangle', vol: 0.06 }); tone(329.63, 0.17, 0.55, { type: 'triangle', vol: 0.06 }); },
+      bell:    function () { tone(528, 0, 2.8, { vol: 0.09, attack: 0.005 }); tone(792, 0, 1.9, { vol: 0.035, attack: 0.005 }); tone(1056, 0, 1.2, { vol: 0.018, attack: 0.005 }); },
+      start:   function () { tone(440, 0, 0.9, { vol: 0.05, attack: 0.02 }); },
+      finish:  function () { [523.25, 659.25, 783.99, 1046.5].forEach(function (f, i) { tone(f, i * 0.12, 0.8, { vol: 0.06 }); }); }
+    };
+    var synth = window.speechSynthesis || null, voice = null;
+    function pickVoice() {
+      if (!synth) return;
+      var vs = synth.getVoices() || [];
+      voice = vs.filter(function (v) { return /^es(-|_)CL/i.test(v.lang); })[0] ||
+              vs.filter(function (v) { return /^es/i.test(v.lang); })[0] || null;
+    }
+    if (synth) { pickVoice(); if ('onvoiceschanged' in synth) synth.onvoiceschanged = pickVoice; }
+    return {
+      play: function (n) { if (!on) return; try { fx[n] && fx[n](); } catch (e) {} },
+      say: function (text) {
+        if (!on || !synth) return;
+        try {
+          synth.cancel();
+          var u = new SpeechSynthesisUtterance(text.replace(/…/g, ''));
+          u.lang = voice ? voice.lang : 'es-ES'; if (voice) u.voice = voice;
+          u.rate = 0.85; u.pitch = 1; u.volume = 0.9;
+          synth.speak(u);
+        } catch (e) {}
+      },
+      hush: function () { try { synth && synth.cancel(); } catch (e) {} },
+      canSpeak: function () { return !!synth; },
+      isOn: function () { return on; },
+      set: function (v) { on = v; if (!v) this.hush(); try { localStorage.setItem(KEY, v ? 'on' : 'off'); } catch (e) {} }
+    };
+  })();
+
+  function syncSoundBtn() {
+    var b = $('#btn-sound'), on = Sound.isOn();
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    $('use', b).setAttribute('href', on ? '#i-sound-on' : '#i-sound-off');
+    $('#sound-state').textContent = on ? 'activado' : 'desactivado';
+  }
+  $('#btn-sound').addEventListener('click', function () {
+    Sound.set(!Sound.isOn()); syncSoundBtn();
+    Sound.play('select');
+    announce(Sound.isOn() ? 'Sonido activado' : 'Sonido desactivado');
+  });
+  syncSoundBtn();
+
+  /* =========================================================
+     BARRA DE TIEMPO LINEAL
+     mode 'answer'  → se vacía (tiempo restante)
+     mode 'practice'→ se llena (tiempo de práctica)
+     ========================================================= */
+  var BARS = [];
+  function TimeBar(mount, seconds, o) {
+    o = o || {};
+    mount.innerHTML =
+      '<div class="tbar ' + (o.mode || 'answer') + '" role="timer">' +
+        '<div class="tbar-top"><span class="tbar-label">' + icon('i-reloj') + '<span class="tl"></span></span>' +
+        '<span class="tbar-time" aria-hidden="true"></span></div>' +
+        '<div class="tbar-track"><div class="tbar-fill"></div></div>' +
+      '</div>';
+    var el = $('.tbar', mount), fill = $('.tbar-fill', mount), timeEl = $('.tbar-time', mount), tl = $('.tl', mount);
+    var total = seconds * 1000, elapsed = 0, startAt = 0, iv = null, running = false, done = false, lowFired = false;
+    var answer = (o.mode || 'answer') === 'answer';
+
+    function paint(e) {
+      var rem = Math.max(0, total - e);
+      timeEl.textContent = fmt(rem);
+      fill.style.width = ((answer ? rem / total : e / total) * 100).toFixed(2) + '%';
+      var low = answer && rem > 0 && rem <= Math.min(5000, total * 0.34);
+      el.classList.toggle('low', low);
+      if (low && !lowFired) { lowFired = true; announce('Quedan ' + Math.ceil(rem / 1000) + ' segundos.'); }
+      el.setAttribute('aria-label', (tl.textContent || 'Tiempo') + ': quedan ' + Math.ceil(rem / 1000) + ' segundos');
+    }
+    function tick() { var e = elapsed + (Date.now() - startAt); paint(e); if (e >= total) finish(); }
+    function finish() {
+      clearInterval(iv); running = false; done = true; elapsed = total;
+      paint(total); el.classList.remove('low');
+      if (o.onEnd) o.onEnd();
+    }
+    var api = {
+      el: el,
+      label: function (t) { tl.textContent = t; },
+      state: function (cls) { el.classList.remove('ok', 'over', 'low'); if (cls) el.classList.add(cls); },
+      start: function () {
+        if (running) return;
+        if (done) api.reset();
+        startAt = Date.now(); running = true;
+        iv = setInterval(tick, 200);
+      },
+      pause: function () {
+        if (!running) return;
+        elapsed += Date.now() - startAt; running = false;
+        clearInterval(iv);
+      },
+      reset: function () {
+        clearInterval(iv); running = false; done = false; elapsed = 0; lowFired = false;
+        api.state(null); paint(0);
+      },
+      end: function () { clearInterval(iv); running = false; done = true; elapsed = total; paint(total); el.classList.remove('low'); },
+      destroy: function () { clearInterval(iv); running = false; var i = BARS.indexOf(api); if (i > -1) BARS.splice(i, 1); },
+      isRunning: function () { return running; },
+      isDone: function () { return done; },
+      remaining: function () { return Math.max(0, total - (running ? elapsed + Date.now() - startAt : elapsed)); }
+    };
+    api.label(o.label || 'Tiempo');
+    paint(0);
+    BARS.push(api);
+    return api;
+  }
+
+  /* Pausa justa: si la pestaña se oculta, las barras se detienen y se reanudan al volver */
+  var autoPaused = [];
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      autoPaused = BARS.filter(function (b) { return b.isRunning(); });
+      autoPaused.forEach(function (b) { b.pause(); });
+    } else {
+      autoPaused.forEach(function (b) { b.start(); });
+      autoPaused = [];
+    }
+  });
+
+  /* =========================================================
+     ESTADO
+     ========================================================= */
+  function currentPref() { var r = $('input[name="timepref"]:checked'); return r ? r.value : 'normal'; }
+  function freshState() {
+    var ans = {}, quiz = {};
+    STEPS.forEach(function (s) {
+      if (s.type === 'choice') ans[s.id] = { ans: null, other: '', inTime: false, expired: false };
+      if (s.type === 'quiz') quiz[s.id] = { choice: null, checked: false, correct: false, expired: false };
+    });
+    return { pref: currentPref(), ans: ans, quiz: quiz, amp: { val: null, inTime: false, expired: false },
+             combo: VARS.map(function () { return null; }), dec: null, prac: {}, tabDone: false };
+  }
+  var state = freshState();
+  function mult() { return state.pref === 'extendido' ? 2 : 1; }
+
+  /* =========================================================
+     PRÁCTICAS (barra de tiempo que inicia la persona)
+     ========================================================= */
+  var PRAC = {};
+  function Practice(box) {
+    var id = box.getAttribute('data-practice'), sec = +box.getAttribute('data-sec'), canStop = box.hasAttribute('data-stop');
+    var p = PRAC[id] = PRAC[id] || { guideOn: false, guide: null };
+    if (p.bar) p.bar.destroy();
+    box.innerHTML = '<div class="tb"></div><div class="practice-ctrl">' +
+      '<button type="button" class="btn btn-accent btn-sm" data-p="toggle">' + icon('i-play') + '<span>Comenzar</span></button>' +
+      (canStop ? '<button type="button" class="btn btn-ghost btn-sm" data-p="stop">' + icon('i-stop') + 'Detener la experiencia</button>' : '') +
+      '<button type="button" class="btn btn-ghost btn-sm" data-p="reset">' + icon('i-reset') + 'Reiniciar</button></div>' +
+      '<p class="practice-state"></p>';
+    var tog = $('[data-p="toggle"]', box), stEl = $('.practice-state', box), stopped = false, IDLE = 'Presiona «Comenzar» cuando lo decidas.';
+    function setTog(ico, txt) { $('use', tog).setAttribute('href', '#' + ico); $('span', tog).textContent = txt; }
+    function guide(run) { if (p.guide && p.guideOn) { if (run) p.guide.start(); else p.guide.stop(); } }
+    var bar = p.bar = TimeBar($('.tb', box), sec, {
+      mode: 'practice', label: 'Tiempo de práctica · ' + sec + ' segundos',
+      onEnd: function () {
+        setTog('i-reset', 'Repetir'); stEl.textContent = 'Tiempo completado'; bar.state('ok'); guide(false);
+        Sound.play('bell'); announce('Tiempo completado. Cuando quieras, continúa.');
+      }
+    });
+    stEl.textContent = IDLE;
+    p.pauseExt = function () {
+      if (bar.isRunning()) { bar.pause(); setTog('i-play', 'Reanudar'); stEl.textContent = 'En pausa'; }
+      guide(false);
+    };
+    p.resetAll = function () { bar.reset(); stopped = false; setTog('i-play', 'Comenzar'); stEl.textContent = IDLE; guide(false); };
+    tog.addEventListener('click', function () {
+      if (bar.isRunning()) {
+        bar.pause(); setTog('i-play', 'Reanudar'); stEl.textContent = 'En pausa'; guide(false); announce('Práctica en pausa.');
+      } else {
+        if (stopped || bar.isDone()) { bar.reset(); stopped = false; bar.label('Tiempo de práctica · ' + sec + ' segundos'); }
+        bar.start(); state.prac[id] = true;
+        setTog('i-pause', 'Pausar'); stEl.textContent = 'En práctica…'; guide(true);
+        Sound.play('start'); announce('Práctica iniciada: ' + Math.ceil(bar.remaining() / 1000) + ' segundos.');
+      }
+    });
+    if (canStop) $('[data-p="stop"]', box).addEventListener('click', function () {
+      bar.pause(); stopped = true; bar.state('over'); bar.label('Experiencia detenida');
+      setTog('i-play', 'Comenzar de nuevo'); stEl.textContent = 'Experiencia detenida'; guide(false);
+      Sound.play('gentle'); announce('Experiencia detenida. Puedes continuar cuando quieras.');
+    });
+    $('[data-p="reset"]', box).addEventListener('click', function () {
+      p.resetAll(); bar.label('Tiempo de práctica · ' + sec + ' segundos'); announce('Práctica reiniciada.');
+    });
+    return p;
+  }
+
+  /* =========================================================
+     VISTAS Y NAVEGACIÓN
+     ========================================================= */
+  STEPS.forEach(function (s) {
+    var d = document.createElement('div');
+    d.className = 'step'; d.id = s.id; d.hidden = true;
+    $('#screen-' + s.screen + ' .screen-body').appendChild(d);
+  });
+  var VIEWS = [{ screen: 'inicio' }]
+    .concat(STEPS.map(function (s) { return { screen: s.screen, step: s.id, cfg: s }; }))
+    .concat([{ screen: 'cierre' }, { screen: 'salida' }]);
+  var CIERRE = VIEWS.length - 2;
+  var SCREEN_IDX = { p1: 0, p2: 1, p3: 2, p4: 3, p5: 4, p6: 5 };
+  var SCREEN_NAME = ['Observo', 'Exploro', 'Experimento', 'Reconozco', 'Adapto', 'Integro'];
+  var cur = 0, curQBar = null, tensionPause = null;
+  function viewIndex(step) { for (var i = 0; i < VIEWS.length; i++) if (VIEWS[i].step === step) return i; return 0; }
+
+  function updateProgress(v, i) {
+    $('#progress').hidden = v.screen === 'inicio' || v.screen === 'salida';
+    var pct = Math.round(Math.min(i, CIERRE) / CIERRE * 100);
+    $('#bar-fill').style.width = pct + '%';
+    $('#bar').setAttribute('aria-valuenow', pct);
+    $('#bar').setAttribute('aria-valuetext', pct + '% completado');
+    $('#progress-pct').textContent = pct + '%';
+    var si = v.screen in SCREEN_IDX ? SCREEN_IDX[v.screen] : 6;
+    $('#progress-label').textContent = si === 6 ? 'Cierre · Actividad completada' : 'Pantalla ' + (si + 1) + ' de 6 · ' + SCREEN_NAME[si];
+    $$('#steps li').forEach(function (li, k) {
+      li.classList.toggle('done', k < si);
+      li.classList.toggle('current', k === si);
+      if (k === si) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+    });
+  }
+
+  function go(i, opts) {
+    opts = opts || {};
+    if (i < 0 || i >= VIEWS.length) return;
+    var prev = VIEWS[cur], v = VIEWS[i];
+    var screenChanged = opts.initial || prev.screen !== v.screen;
+    cur = i;
+    Object.keys(PRAC).forEach(function (k) { if (PRAC[k].pauseExt) PRAC[k].pauseExt(); });
+    if (tensionPause) tensionPause();
+    stopRhythm();
+    if (curQBar) { curQBar.destroy(); curQBar = null; }
+    Sound.hush();
+
+    $$('.screen').forEach(function (s) { s.hidden = s.id !== 'screen-' + v.screen; });
+    var screen = $('#screen-' + v.screen);
+    if (v.step) $$('.step', screen).forEach(function (st) { st.hidden = st.id !== v.step; });
+
+    if (v.cfg) RENDER[v.cfg.type](v.cfg);
+    else if (v.screen === 'cierre') renderCierre();
+    updateProgress(v, i);
+
+    try { window.scrollTo(0, 0); } catch (e) {}
+    if (!opts.initial) {
+      var target = screenChanged ? $('#t-' + v.screen) : $('[tabindex="-1"]', $('#' + v.step));
+      if (target) setTimeout(function () { try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); } }, 40);
+    }
+  }
+
+  /* =========================================================
+     PIEZAS DE INTERFAZ
+     ========================================================= */
+  function optLabel(o) { return typeof o === 'string' ? o : o.t; }
+  function optHTML(name, k, o, checked) {
+    var inner = typeof o === 'string' ? o : '<span class="opt-sub"><b>' + o.t + ':</b> ' + o.d + '</span>';
+    return '<label class="opt"><input type="radio" name="' + name + '" value="' + k + '"' + (checked ? ' checked' : '') + '>' +
+      '<span class="opt-body"><span class="radio" aria-hidden="true"></span><span class="opt-text">' + inner + '</span></span></label>';
+  }
+  function partHTML(key) {
+    if (!key) return '';
+    var p = PARTS[key];
+    return '<div class="part"><span class="part-l" aria-hidden="true">' + p.L + '</span><div>' +
+      '<p class="part-h"><span class="sr-only">Parte ' + p.L + ': </span>' + p.h + '</p>' +
+      '<p class="part-fn"><b>Función:</b> ' + p.fn + '</p></div></div>';
+  }
+  function leadHTML(cfg) { return cfg.lead ? '<p class="lead-p">' + cfg.lead + '</p>' : ''; }
+  function noteHTML(t) { return '<p class="note">' + icon('i-info') + '<span>' + t + '</span></p>'; }
+  function calloutHTML(c) {
+    return '<div class="callout ' + c.cls + '" hidden><h4><svg class="ci" aria-hidden="true"><use href="#' + c.ico + '"/></svg>' + c.h + '</h4>' +
+      c.ps.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '</div>';
+  }
+  function navHTML(hintId, hintText, nextLabel) {
+    return '<div class="btn-row between">' +
+      '<button type="button" class="btn btn-ghost" data-prev>' + icon('i-left') + 'Anterior</button>' +
+      '<button type="button" class="btn btn-primary" data-next' + (hintId ? ' aria-describedby="' + hintId + '"' : '') + '>' + (nextLabel || 'Continuar') + ' ' + icon('i-right') + '</button>' +
+      '</div>' + (hintId ? '<p class="hint" id="' + hintId + '">' + hintText + '</p>' : '');
+  }
+  function noLimitBar(mount) {
+    mount.innerHTML = '<div class="tbar nolimit"><div class="tbar-top"><span class="tbar-label">' + icon('i-reloj') + 'Sin límite de tiempo</span></div></div>';
+  }
+  function bindRadios(container, fn) {
+    $$('input[type="radio"]', container).forEach(function (r) {
+      r.addEventListener('change', function () { fn(parseInt(r.value, 10)); });
+    });
+  }
+  function stepCfg(id) { for (var i = 0; i < STEPS.length; i++) if (STEPS[i].id === id) return STEPS[i]; return null; }
+  function answerLabel(id, full) {
+    var st = state.ans[id], cfg = stepCfg(id);
+    if (!st || st.ans === null) return st && st.expired ? 'Sin respuesta' : '—';
+    var o = cfg.opts[st.ans], t = optLabel(o);
+    if (isOther(t) && st.other.trim()) return t.replace(/\.$/, '') + ': ' + st.other.trim();
+    return full && typeof o !== 'string' ? o.t + ': ' + o.d : t;
+  }
+  function focusHTML(f) {
+    return '<div class="focus-card"><span class="opt-ico">' + icon('i-funcion') + '</span><div>' +
+      '<p class="k">' + f.k + '</p><p class="t" style="font-size:1.05rem">' + esc(answerLabel(f.from, true)) + '</p></div></div>';
+  }
+  /* Barra de tiempo de respuesta (o aviso de "sin límite") */
+  function answerBar(mount, seconds, st, onExpire, label) {
+    if (state.pref === 'sin') { noLimitBar(mount); return null; }
+    var bar = curQBar = TimeBar(mount, seconds * mult(), {
+      mode: 'answer', label: label || 'Tiempo para responder',
+      onEnd: function () { st.expired = true; bar.label('Se terminó el tiempo'); bar.state('over'); Sound.play('gentle'); onExpire(); }
+    });
+    return bar;
+  }
+
+  var RENDER = {};
+
+  /* ---- Introducción de pantalla ---- */
+  RENDER.intro = function (cfg) {
+    $('#' + cfg.id).innerHTML =
+      '<div class="practice-card"><div class="instr" tabindex="-1">' +
+        cfg.instr.map(function (p, i) { return '<p' + (i === 0 ? ' class="lead"' : '') + '>' + p + '</p>'; }).join('') + '</div>' +
+      '<div class="visual"><svg class="illus" viewBox="0 0 210 170" role="img" aria-label="Silueta de una persona con puntos suaves que representan la observación del cuerpo.">' +
+        '<rect x="1" y="1" width="208" height="168" rx="18" fill="#f0fdfa" stroke="#ccfbf1" stroke-width="2"/>' +
+        '<circle cx="105" cy="34" r="15" fill="#c7d2fe"/>' +
+        '<path d="M105 52v52M105 104l-16 52M105 104l16 52M79 64l26 14 26-14" fill="none" stroke="#312e81" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<circle cx="105" cy="34" r="24" fill="none" stroke="#0f766e" stroke-width="2" stroke-dasharray="3 5"/>' +
+        '<circle cx="80" cy="66" r="6" fill="#5eead4"/><circle cx="130" cy="66" r="6" fill="#5eead4"/><circle cx="105" cy="92" r="6" fill="#5eead4"/><circle cx="90" cy="150" r="6" fill="#5eead4"/><circle cx="120" cy="150" r="6" fill="#5eead4"/>' +
+      '</svg></div></div>' + navHTML();
+  };
+
+  /* ---- Elección (con o sin barra de tiempo) ---- */
+  RENDER.choice = function (cfg) {
+    var st = state.ans[cfg.id], box = $('#' + cfg.id);
+    var grid = cfg.opts.every(function (o) { return typeof o === 'string' && o.length <= 26; });
+    box.innerHTML = leadHTML(cfg) + partHTML(cfg.part) + (cfg.focus ? focusHTML(cfg.focus) : '') +
+      (cfg.t ? '<div class="tb-q"></div>' : '') +
+      '<fieldset><legend id="lg-' + cfg.id + '" tabindex="-1">' + cfg.legend + '</legend>' +
+      '<div class="options' + (grid ? '' : ' list') + '">' + cfg.opts.map(function (o, k) { return optHTML('r-' + cfg.id, k, o, st.ans === k); }).join('') + '</div>' +
+      '<div class="other-wrap" hidden><label class="field-label" for="o-' + cfg.id + '">Descríbelo brevemente (opcional)</label>' +
+      '<input class="text-input" id="o-' + cfg.id + '" type="text" maxlength="120" autocomplete="off"></div></fieldset>' +
+      (cfg.note ? noteHTML(cfg.note) : '') +
+      (cfg.practice ? '<div class="instr" style="margin-top:18px"><p class="lead">' + cfg.practice.instr + '</p></div>' +
+        '<div class="pbox" data-practice="' + cfg.id + '" data-sec="' + cfg.practice.sec + '" data-stop="1" style="margin-top:14px"></div>' : '') +
+      (cfg.rhythm ? rhythmHTML(cfg.rhythm) : '') +
+      '<p class="timeout-note" hidden>Se terminó el tiempo. Puedes responder igualmente o continuar.</p>' +
+      (cfg.callout ? calloutHTML(cfg.callout) : '') +
+      navHTML('h-' + cfg.id, 'Selecciona una opción para continuar.');
+
+    var next = $('[data-next]', box), hint = $('.hint', box), note = $('.timeout-note', box), co = $('.callout', box);
+    var wrap = $('.other-wrap', box), inp = $('.text-input', box), bar = null;
+    inp.value = st.other;
+    wrap.hidden = !(st.ans !== null && isOther(optLabel(cfg.opts[st.ans])));
+    function refresh() {
+      var can = st.ans !== null || st.expired;
+      next.disabled = !can; hint.hidden = can;
+      if (co) co.hidden = !can;
+      note.hidden = !(st.expired && st.ans === null);
+    }
+    if (cfg.t) {
+      bar = answerBar($('.tb-q', box), cfg.t, st, function () {
+        refresh(); announce('Se terminó el tiempo. Puedes responder igualmente o continuar.' + (co ? ' ' + co.textContent : ''));
+      });
+      if (bar) {
+        if (st.ans !== null) { bar.label(st.inTime ? 'Respondiste a tiempo' : 'Respuesta registrada'); bar.state(st.inTime ? 'ok' : 'over'); if (!st.inTime) bar.end(); }
+        else if (st.expired) { bar.label('Se terminó el tiempo'); bar.state('over'); bar.end(); }
+        else { bar.start(); setTimeout(function () { announce('Tienes ' + cfg.t * mult() + ' segundos para responder.'); }, 700); }
+      }
+    }
+    bindRadios(box.querySelector('fieldset'), function (k) {
+      var first = st.ans === null;
+      st.ans = k;
+      wrap.hidden = !isOther(optLabel(cfg.opts[k]));
+      if (first) {
+        if (!cfg.t || state.pref === 'sin') { st.inTime = true; Sound.play('ok'); }
+        else if (bar && bar.isRunning()) { st.inTime = true; bar.pause(); bar.label('Respondiste a tiempo'); bar.state('ok'); Sound.play('ok'); }
+        else { if (bar) bar.label('Respuesta registrada'); Sound.play('select'); }
+        if (co && co.hidden) announce(co.textContent);
+      } else Sound.play('select');
+      refresh();
+    });
+    inp.addEventListener('input', function (e) { st.other = e.target.value; });
+    if (cfg.practice) Practice($('.pbox', box));
+    if (cfg.rhythm) initRhythm(box);
+    refresh();
+  };
+
+  /* ---- Guía rítmica opcional ---- */
+  var rhythm = { iv: null, on: false, beat: 1.4 };
+  function rhythmHTML(text) {
+    return '<div class="rhythm"><p>' + text + '</p>' +
+      '<div class="switch-row"><button type="button" class="switch" id="rg-sw" aria-pressed="false"><span class="knob" aria-hidden="true"></span>Utilizar una guía</button></div>' +
+      '<div class="rg" hidden><div class="rg-track" aria-hidden="true"><span class="rg-dot"></span></div>' +
+      '<div class="chips" role="group" aria-label="Ritmo de la guía">' +
+        '<button type="button" class="chip-btn" data-beat="2.2" aria-pressed="false">Más lento</button>' +
+        '<button type="button" class="chip-btn" data-beat="1.4" aria-pressed="true">Moderado</button>' +
+      '</div></div></div>';
+  }
+  function stopRhythm() { clearInterval(rhythm.iv); rhythm.iv = null; rhythm.on = false; }
+  function initRhythm(box) {
+    var sw = $('#rg-sw', box), rg = $('.rg', box), dot = $('.rg-dot', box);
+    function run() {
+      clearInterval(rhythm.iv);
+      dot.style.transitionDuration = rhythm.beat + 's';
+      var side = false;
+      function beat() { side = !side; dot.classList.toggle('r', side); Sound.play('select'); }
+      beat();
+      rhythm.iv = setInterval(beat, rhythm.beat * 1000);
+    }
+    sw.addEventListener('click', function () {
+      rhythm.on = !rhythm.on;
+      sw.setAttribute('aria-pressed', rhythm.on ? 'true' : 'false');
+      rg.hidden = !rhythm.on;
+      if (rhythm.on) { state.prac['p4-b1'] = true; run(); announce('Guía activada. El punto se mueve de lado a lado con un sonido suave.'); }
+      else { clearInterval(rhythm.iv); rhythm.iv = null; announce('Guía desactivada.'); }
+    });
+    $$('.chip-btn', rg).forEach(function (b) {
+      b.addEventListener('click', function () {
+        rhythm.beat = parseFloat(b.getAttribute('data-beat'));
+        $$('.chip-btn', rg).forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        if (rhythm.on) run();
+      });
+    });
+  }
+
+  /* ---- Barra de amplitud ---- */
+  function ampLevel(v) { return v < 34 ? 'Pequeña' : v < 67 ? 'Media' : 'Amplia'; }
+  RENDER.amp = function (cfg) {
+    var st = state.amp, box = $('#' + cfg.id), v = st.val === null ? 30 : st.val;
+    box.innerHTML = partHTML(cfg.part) + focusHTML({ from: 'p3-a1', k: 'Tu posibilidad' }) +
+      '<div class="tb-q"></div>' +
+      '<p class="lead-p" id="lg-' + cfg.id + '" tabindex="-1">' + cfg.legend + '</p>' +
+      '<div class="amp"><svg viewBox="0 0 200 200" aria-hidden="true" focusable="false">' +
+        '<circle cx="100" cy="100" r="94" fill="#f0fdfa"/>' +
+        '<path d="M48 78a52 52 0 0 1 104 0" fill="none" stroke="#99f6e4" stroke-width="3" stroke-dasharray="4 6"/>' +
+        '<circle cx="100" cy="50" r="15" fill="#c7d2fe"/>' +
+        '<path d="M100 68v62M100 130l-16 50M100 130l16 50" fill="none" stroke="#312e81" stroke-width="10" stroke-linecap="round"/>' +
+        '<line id="arm-l" x1="100" y1="78" x2="100" y2="130" stroke="#0f766e" stroke-width="9" stroke-linecap="round"/>' +
+        '<line id="arm-r" x1="100" y1="78" x2="100" y2="130" stroke="#0f766e" stroke-width="9" stroke-linecap="round"/>' +
+      '</svg><div>' +
+        '<p class="amp-read" aria-hidden="true">Amplitud: <span id="amp-lab"></span></p>' +
+        '<label class="field-label" for="amp-in">Barra de amplitud</label>' +
+        '<input type="range" id="amp-in" min="0" max="100" step="5" value="' + v + '">' +
+        '<div class="amp-ticks" aria-hidden="true"><span>Pequeña</span><span>Media</span><span>Amplia</span></div>' +
+      '</div></div>' +
+      '<p class="timeout-note" hidden>Se terminó el tiempo. Puedes elegir igualmente o continuar.</p>' +
+      navHTML('h-' + cfg.id, 'Mueve la barra de amplitud para continuar.');
+    var inp = $('#amp-in'), next = $('[data-next]', box), hint = $('.hint', box), note = $('.timeout-note', box);
+    function draw(val) {
+      var a = (15 + val / 100 * 155) * Math.PI / 180, L = 52;
+      var dx = (L * Math.sin(a)).toFixed(1), dy = (78 + L * Math.cos(a)).toFixed(1);
+      $('#arm-l').setAttribute('x2', (100 - dx).toFixed(1)); $('#arm-l').setAttribute('y2', dy);
+      $('#arm-r').setAttribute('x2', (100 + +dx).toFixed(1)); $('#arm-r').setAttribute('y2', dy);
+      $('#amp-lab').textContent = ampLevel(val) + ' · ' + val + ' %';
+      inp.setAttribute('aria-valuetext', ampLevel(val) + ', ' + val + ' por ciento');
+    }
+    function refresh() {
+      var can = st.val !== null || st.expired;
+      next.disabled = !can; hint.hidden = can;
+      note.hidden = !(st.expired && st.val === null);
+    }
+    var bar = answerBar($('.tb-q', box), cfg.t, st, function () { refresh(); announce('Se terminó el tiempo. Puedes elegir igualmente o continuar.'); }, 'Tiempo para elegir');
+    if (bar) {
+      if (st.val !== null) { bar.label(st.inTime ? 'Elegiste a tiempo' : 'Amplitud registrada'); bar.state(st.inTime ? 'ok' : 'over'); if (!st.inTime) bar.end(); }
+      else if (st.expired) { bar.label('Se terminó el tiempo'); bar.state('over'); bar.end(); }
+      else bar.start();
+    }
+    inp.addEventListener('input', function () {
+      var first = st.val === null;
+      st.val = +inp.value; draw(st.val);
+      if (first) {
+        if (bar && bar.isRunning()) { st.inTime = true; bar.pause(); bar.label('Elegiste a tiempo'); bar.state('ok'); }
+        else if (!bar) st.inTime = true;
+        else bar.label('Amplitud registrada');
+        Sound.play('ok');
+      }
+      refresh();
+    });
+    draw(v); refresh();
+  };
+
+  /* ---- Barra de tensión (tensión suave → liberación) ---- */
+  RENDER.tension = function (cfg) {
+    var box = $('#' + cfg.id), T = cfg.sec * 1000, TENSE = 5000;
+    box.innerHTML = partHTML(cfg.part) + focusHTML(cfg.focus) +
+      '<div class="instr" tabindex="-1"><p class="lead">' + cfg.instr + '</p></div>' +
+      '<div style="margin-top:16px"><div class="tension-phase" aria-hidden="true"><span data-ph="1">Tensión suave</span><span data-ph="2">Dejo de producirla</span></div>' +
+      '<div class="tbar practice" role="timer"><div class="tbar-top"><span class="tbar-label">' + icon('i-reloj') + '<span class="tl">Barra de tensión · ' + cfg.sec + ' segundos</span></span>' +
+      '<span class="tbar-time" aria-hidden="true">' + fmt(T) + '</span></div><div class="tbar-track"><div class="tbar-fill" style="width:0%"></div></div></div>' +
+      '<div class="practice-ctrl">' +
+        '<button type="button" class="btn btn-accent btn-sm" data-t="toggle">' + icon('i-play') + '<span>Comenzar</span></button>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-t="stop">' + icon('i-stop') + 'Detener la experiencia</button>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-t="reset">' + icon('i-reset') + 'Reiniciar</button>' +
+      '</div><p class="practice-state">Presiona «Comenzar» cuando lo decidas.</p></div>' + navHTML();
+
+    var el = $('.tbar', box), fill = $('.tbar-fill', box), timeEl = $('.tbar-time', box), tl = $('.tl', box), stEl = $('.practice-state', box);
+    var tog = $('[data-t="toggle"]', box), elapsed = 0, startAt = 0, iv = null, running = false, phase = 0, done = false, stopped = false;
+    function setTog(ico, txt) { $('use', tog).setAttribute('href', '#' + ico); $('span', tog).textContent = txt; }
+    function setPhase(p) {
+      if (p === phase) return;
+      phase = p;
+      $$('.tension-phase span', box).forEach(function (s) { s.classList.toggle('on', +s.getAttribute('data-ph') === p); });
+      el.classList.toggle('tense', p === 1); el.classList.toggle('release', p === 2);
+      if (p === 1) { tl.textContent = 'Genera una tensión suave…'; announce('Genera una tensión suave.'); }
+      if (p === 2) { tl.textContent = 'Deja de producirla voluntariamente…'; Sound.play('start'); announce('Ahora deja de producir la tensión.'); }
+    }
+    function paint(e) {
+      timeEl.textContent = fmt(Math.max(0, T - e));
+      if (e < TENSE) { setPhase(1); fill.style.width = (e / TENSE * 85).toFixed(1) + '%'; }
+      else { setPhase(2); fill.style.width = (85 * (1 - (e - TENSE) / (T - TENSE))).toFixed(1) + '%'; }
+    }
+    function tick() {
+      var e = elapsed + Date.now() - startAt;
+      if (e >= T) {
+        clearInterval(iv); running = false; done = true; elapsed = T;
+        fill.style.width = '0%'; timeEl.textContent = fmt(0);
+        el.classList.remove('tense', 'release'); el.classList.add('ok'); tl.textContent = 'Tiempo completado';
+        $$('.tension-phase span', box).forEach(function (s) { s.classList.remove('on'); });
+        setTog('i-reset', 'Repetir'); stEl.textContent = 'Tiempo completado';
+        Sound.play('bell'); announce('Tiempo completado. Cuando quieras, continúa.');
+        return;
+      }
+      paint(e);
+    }
+    function reset() {
+      clearInterval(iv); running = false; done = false; stopped = false; elapsed = 0; phase = 0;
+      el.classList.remove('tense', 'release', 'ok', 'over'); fill.style.width = '0%'; timeEl.textContent = fmt(T);
+      tl.textContent = 'Barra de tensión · ' + cfg.sec + ' segundos';
+      $$('.tension-phase span', box).forEach(function (s) { s.classList.remove('on'); });
+      setTog('i-play', 'Comenzar'); stEl.textContent = 'Presiona «Comenzar» cuando lo decidas.';
+    }
+    function pause() {
+      if (!running) return;
+      elapsed += Date.now() - startAt; running = false; clearInterval(iv);
+      setTog('i-play', 'Reanudar'); stEl.textContent = 'En pausa';
+    }
+    tensionPause = pause;
+    tog.addEventListener('click', function () {
+      if (running) { pause(); announce('Práctica en pausa.'); return; }
+      if (done || stopped) reset();
+      startAt = Date.now(); running = true; state.prac['p4-a2'] = true;
+      iv = setInterval(tick, 100);
+      setTog('i-pause', 'Pausar'); stEl.textContent = 'En práctica…';
+      Sound.play('start'); paint(elapsed);
+    });
+    $('[data-t="stop"]', box).addEventListener('click', function () {
+      pause(); stopped = true;
+      el.classList.remove('tense', 'release'); el.classList.add('over'); tl.textContent = 'Experiencia detenida';
+      setTog('i-play', 'Comenzar de nuevo'); stEl.textContent = 'Experiencia detenida';
+      Sound.play('gentle'); announce('Experiencia detenida. Puedes continuar cuando quieras.');
+    });
+    $('[data-t="reset"]', box).addEventListener('click', function () { reset(); announce('Práctica reiniciada.'); });
+  };
+
+  /* ---- Pregunta con alternativa correcta ---- */
+  var LET = ['A', 'B', 'C', 'D'];
+  RENDER.quiz = function (cfg, focusFb) {
+    if (curQBar) { curQBar.destroy(); curQBar = null; }
+    var st = state.quiz[cfg.id], box = $('#' + cfg.id), letters = !cfg.noLetters;
+    var opts = cfg.opts.map(function (o, k) {
+      var cls = '', mark = '';
+      if (st.checked) {
+        if (k === cfg.ok) { cls = 'correct'; mark = '<span class="mark">✓ Correcta</span>'; }
+        else if (k === st.choice) { cls = 'wrong'; mark = '<span class="mark">Tu respuesta</span>'; }
+      }
+      return '<label class="opt ' + cls + '"><input type="radio" name="q-' + cfg.id + '" value="' + k + '"' + (st.choice === k ? ' checked' : '') + (st.checked ? ' disabled' : '') + '>' +
+        '<span class="opt-body">' + (letters ? '<span class="letter" aria-hidden="true">' + LET[k] + '</span>' : '<span class="radio" aria-hidden="true"></span>') +
+        '<span class="opt-text">' + (letters ? '<span class="sr-only">Alternativa ' + LET[k] + ': </span>' : '') + o + '</span>' + mark + '</span></label>';
+    }).join('');
+    var fb = '';
+    if (st.checked) {
+      fb = '<div class="callout ' + (st.correct ? 'ok' : 'warn') + '"><span class="status">' + (st.correct ? 'Alternativa correcta' : 'No es la alternativa correcta') + '</span>' +
+        '<h4 id="fb-' + cfg.id + '" tabindex="-1">' + (st.correct ? '✅ ' : '') + 'Retroalimentación</h4>' +
+        cfg.fb.map(function (p) { return typeof p === 'string' ? '<p>' + p + '</p>' : '<p class="fb-quote">' + p.quote + '</p>'; }).join('') +
+        (cfg.after || '') + '</div>';
+      if (!st.correct) fb += '<div class="callout ok"><span class="status">La respuesta correcta es</span><h4>✅ ' + (letters ? 'Alternativa ' + LET[cfg.ok] + '. ' : '') + cfg.opts[cfg.ok] + '</h4></div>';
+    }
+    var situation = cfg.situation
+      ? '<div class="situation"><p class="k">Situación</p><p>Queremos explorar la función de equilibrio y estabilidad.</p>' +
+        '<p>La propuesta inicial es permanecer de pie sobre un solo pie.</p><p>La persona indica:</p>' +
+        '<blockquote class="quote">' + icon('i-quote') + '<p>“Esta forma no me resulta cómoda.”</p></blockquote></div>' : '';
+    box.innerHTML = leadHTML(cfg) + partHTML(cfg.part) + situation +
+      (cfg.pre ? '<h3>' + cfg.pre + '</h3>' : '') + '<div class="tb-q"></div>' +
+      '<fieldset><legend id="lg-' + cfg.id + '" tabindex="-1">' + cfg.q + '</legend><div class="options list">' + opts + '</div></fieldset>' +
+      '<p class="timeout-note"' + (st.expired && !st.checked ? '' : ' hidden') + '>Se terminó el tiempo. Puedes responder igualmente y comprobar tu respuesta.</p>' +
+      '<div class="qfb">' + fb + '</div>' +
+      '<div class="btn-row between">' +
+        '<button type="button" class="btn btn-ghost" data-prev>' + icon('i-left') + 'Anterior</button>' +
+        (st.checked
+          ? (cfg.final ? '<button type="button" class="btn btn-accent" id="q-fin">Finalizar ' + icon('i-check') + '</button>'
+                       : '<button type="button" class="btn btn-primary" data-next>Continuar ' + icon('i-right') + '</button>')
+          : '<button type="button" class="btn btn-accent" id="q-check" aria-describedby="qh-' + cfg.id + '"' + (st.choice === null ? ' disabled' : '') + '>' + icon('i-check') + 'Comprobar respuesta</button>') +
+      '</div>' + (st.checked ? '' : '<p class="hint" id="qh-' + cfg.id + '"' + (st.choice === null ? '' : ' hidden') + '>Selecciona una alternativa y luego comprueba tu respuesta.</p>');
+
+    var bar = answerBar($('.tb-q', box), cfg.t, st, function () {
+      $('.timeout-note', box).hidden = false;
+      announce('Se terminó el tiempo. Puedes responder igualmente y comprobar tu respuesta.');
+    });
+    if (bar) {
+      if (st.checked) { bar.label('Respuesta comprobada'); bar.state(st.expired ? 'over' : 'ok'); if (st.expired) bar.end(); }
+      else if (st.expired) { bar.label('Se terminó el tiempo'); bar.state('over'); bar.end(); }
+      else { bar.start(); if (!focusFb) setTimeout(function () { announce('Tienes ' + cfg.t * mult() + ' segundos para responder.'); }, 700); }
+    }
+    if (!st.checked) {
+      bindRadios(box.querySelector('fieldset'), function (k) { st.choice = k; $('#q-check').disabled = false; $('#qh-' + cfg.id).hidden = true; Sound.play('select'); });
+      $('#q-check').addEventListener('click', function () {
+        st.checked = true; st.correct = st.choice === cfg.ok;
+        Sound.play(st.correct ? 'correct' : 'gentle');
+        RENDER.quiz(cfg, true);
+      });
+    } else if (cfg.final) {
+      $('#q-fin').addEventListener('click', function () { Sound.play('finish'); go(CIERRE); });
+    }
+    if (focusFb) {
+      announce((st.correct ? 'Alternativa correcta. ' : 'No es la alternativa correcta. La respuesta correcta es ' + (letters ? 'la alternativa ' + LET[cfg.ok] + '. ' : cfg.opts[cfg.ok] + ' ')) + cfg.fb.map(function (p) { return typeof p === 'string' ? p : p.quote; }).join(' '));
+      var h = $('#fb-' + cfg.id);
+      if (h) setTimeout(function () { try { h.focus({ preventScroll: false }); } catch (e) { h.focus(); } }, 40);
+    }
+  };
+
+  /* ---- Pantalla 5 · cuadro de adaptación ---- */
+  function comboCount() { return state.combo.filter(function (x) { return x !== null; }).length; }
+  RENDER.matrix = function (cfg) {
+    var box = $('#' + cfg.id);
+    box.innerHTML = '<h3 id="lg-' + cfg.id + '" tabindex="-1">Ahora prueba una adaptación</h3>' +
+      '<p><strong>Puedes modificar uno o más elementos:</strong></p><div class="tb-q"></div>' +
+      '<div class="matrix" role="group" aria-label="Elementos que puedes modificar">' +
+        '<div class="matrix-head" aria-hidden="true"><span>Puedo modificar...</span><span>Algunas posibilidades</span></div>' +
+        VARS.map(function (v, r) {
+          return '<div class="matrix-row" role="group" aria-labelledby="var-' + r + '">' +
+            '<span class="var-name" id="var-' + r + '"><span class="opt-ico">' + icon(v.i) + '</span>' + v.k + '</span>' +
+            '<div class="chips">' + v.o.map(function (o, k) {
+              return '<button type="button" class="chip-btn" data-r="' + r + '" data-k="' + k + '" aria-pressed="' + (state.combo[r] === k) + '">' + o + '</button>';
+            }).join('') + '</div></div>';
+        }).join('') + '</div>' +
+      '<p class="sel-count" aria-live="polite"></p>' +
+      navHTML('h-' + cfg.id, 'Selecciona al menos un elemento para continuar.');
+    var next = $('[data-next]', box), hint = $('.hint', box), cnt = $('.sel-count', box), matSt = { expired: false };
+    function refresh() {
+      var n = comboCount();
+      cnt.textContent = 'Elementos seleccionados: ' + n;
+      next.disabled = n === 0; hint.hidden = n > 0;
+    }
+    $$('.chip-btn', box).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var r = +b.getAttribute('data-r'), k = +b.getAttribute('data-k');
+        state.combo[r] = state.combo[r] === k ? null : k;
+        $$('.chip-btn[data-r="' + r + '"]', box).forEach(function (x) {
+          x.setAttribute('aria-pressed', +x.getAttribute('data-k') === state.combo[r] ? 'true' : 'false');
+        });
+        Sound.play('select'); refresh();
+      });
+    });
+    var bar = answerBar($('.tb-q', box), cfg.t, matSt, function () {
+      announce('Se terminó el tiempo para elegir. Puedes seguir eligiendo o continuar.');
+    }, 'Tiempo para elegir');
+    if (bar) bar.start();
+    refresh();
+  };
+
+  /* ---- Pantalla 5 · decisión ---- */
+  RENDER.decide = function (cfg) {
+    var box = $('#' + cfg.id), sel = [];
+    VARS.forEach(function (v, r) { if (state.combo[r] !== null) sel.push({ k: v.k, o: v.o[state.combo[r]] }); });
+    box.innerHTML = '<p id="lg-' + cfg.id + '" tabindex="-1"><strong>Después de elegir:</strong></p>' +
+      '<div class="banner">Has cambiado la <b>FORMA</b> manteniendo la <b>FUNCIÓN</b>.</div>' +
+      '<ol class="route" aria-label="Elementos que modificaste">' + sel.map(function (s, i) {
+        return '<li><span class="stop" style="animation-delay:' + (i * 0.12) + 's"><small>' + s.k + '</small><b>' + s.o + '</b></span>' +
+          (i < sel.length - 1 ? '<span class="arrow" aria-hidden="true">·</span>' : '') + '</li>';
+      }).join('') + '</ol>' +
+      '<p style="font-weight:800;font-size:1.15rem;color:var(--indigo-950)" id="dq">Ahora decide:</p>' +
+      '<div class="decisions" role="group" aria-labelledby="dq">' + DECS.map(function (d, k) {
+        return '<button type="button" class="dec-btn" data-k="' + k + '" aria-pressed="' + (state.dec === k) + '">' + icon(d.i) + d.k + '</button>';
+      }).join('') + '</div>' +
+      '<div class="callout info" id="dec-fb" hidden aria-live="polite"></div>' +
+      '<div class="callout idea" id="dec-final" hidden><p><strong>Detener también es una decisión válida.</strong></p></div>' +
+      navHTML('h-' + cfg.id, 'Elige una decisión para continuar.');
+    var next = $('[data-next]', box), hint = $('.hint', box);
+    function show() {
+      var d = DECS[state.dec], fb = $('#dec-fb');
+      fb.hidden = false;
+      fb.innerHTML = '<h4><svg class="ci" aria-hidden="true"><use href="#' + d.i + '"/></svg>' + d.k + '</h4><p>' + d.fb + '</p>' +
+        (state.dec === 1 || state.dec === 2 ? '<div class="btn-row" style="justify-content:flex-start;margin-top:12px"><button type="button" class="btn btn-ghost btn-sm" data-goto="p5-adapt">' + icon('i-ajusto') + 'Modificar mi adaptación</button></div>' : '');
+      $('#dec-final').hidden = false;
+      next.disabled = false; hint.hidden = true;
+    }
+    next.disabled = state.dec === null; hint.hidden = state.dec !== null;
+    if (state.dec !== null) show();
+    $$('.dec-btn', box).forEach(function (b) {
+      b.addEventListener('click', function () {
+        state.dec = +b.getAttribute('data-k');
+        $$('.dec-btn', box).forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        Sound.play('ok'); show();
+      });
+    });
+  };
+
+  /* ---- Pantalla 6 · cuadro de familias ---- */
+  RENDER.table = function (cfg) {
+    var box = $('#' + cfg.id);
+    box.innerHTML = '<p class="lead-p" id="lg-' + cfg.id + '" tabindex="-1">Has explorado siete familias de posibilidades corporales:</p>' +
+      '<div class="tb-q"></div>' +
+      '<div class="table-wrap"><table class="fam-table"><caption class="sr-only">Siete familias de posibilidades corporales</caption>' +
+      '<thead><tr><th scope="col">Función</th><th scope="col">Estrategia explorada</th></tr></thead><tbody>' +
+      FAM.map(function (f) { return '<tr><td>' + f[0] + '</td><td>' + f[1] + '</td></tr>'; }).join('') +
+      '</tbody></table></div>' + navHTML('h-' + cfg.id, 'Tómate unos segundos para revisar el cuadro.');
+    var next = $('[data-next]', box), hint = $('.hint', box);
+    function unlock() { state.tabDone = true; next.disabled = false; hint.hidden = true; }
+    var tb = $('.tb-q', box);
+    if (state.pref === 'sin' || state.tabDone) {
+      tb.innerHTML = '<div class="tbar nolimit"><div class="tbar-top"><span class="tbar-label">' + icon('i-reloj') + (state.tabDone ? 'Cuadro revisado' : 'Sin límite de tiempo') + '</span></div></div>';
+      unlock();
+    } else {
+      next.disabled = true;
+      var bar = curQBar = TimeBar(tb, cfg.t, {
+        mode: 'practice', label: 'Tiempo para revisar el cuadro',
+        onEnd: function () { bar.label('Revisión completada'); bar.state('ok'); unlock(); Sound.play('ok'); announce('Ya puedes continuar.'); }
+      });
+      bar.start();
+    }
+  };
+
+  /* ---- Cierre ---- */
+  function renderCierre() {
+    var score = QUIZ_IDS.filter(function (id) { return state.quiz[id].correct; }).length, C = 376.99;
+    $('#score-num').textContent = score;
+    $('#score-text').textContent = score + ' de ' + QUIZ_IDS.length;
+    $('#kpi-ok').textContent = score + ' de ' + QUIZ_IDS.length;
+    $('#kpi-prac').textContent = Object.keys(state.prac).length + ' de 3';
+    $('#score-msg').textContent = scoreMessage(score);
+    var ring = $('#score-prog');
+    ring.setAttribute('stroke-dashoffset', C);
+    setTimeout(function () { ring.setAttribute('stroke-dashoffset', (C * (1 - score / QUIZ_IDS.length)).toFixed(2)); }, 120);
+
+    var combo = [];
+    VARS.forEach(function (v, r) { if (state.combo[r] !== null) combo.push(v.k + ': ' + v.o[state.combo[r]]); });
+    var amp = state.amp.val === null ? '' : ' · Amplitud: ' + ampLevel(state.amp.val);
+    var rows = [
+      ['Mi cuerpo parecía necesitar…', answerLabel('p1-q')],
+      ['Estabilidad · Apoyo y enraizamiento', answerLabel('p2-a1') + ' · ' + answerLabel('p2-a2')],
+      ['Movimiento · Movilidad suave', answerLabel('p2-b1')],
+      ['Espacio / amplitud · Extensión y apertura', answerLabel('p3-a1') + amp],
+      ['Estabilidad dinámica · Equilibrio adaptado', answerLabel('p3-b1')],
+      ['Reconocimiento corporal · Tensión y liberación', answerLabel('p4-a1') + ' · ' + answerLabel('p4-a3')],
+      ['Ritmo · Movimiento rítmico o repetitivo', answerLabel('p4-b1')],
+      ['Pausa · Pausa y descanso corporal', answerLabel('p4-c1')],
+      ['Mi adaptación (cambio la forma)', combo.join(' · ') || '—'],
+      ['Mi decisión', state.dec === null ? '—' : DECS[state.dec].k]
+    ];
+    $('#recap').innerHTML = rows.map(function (r) { return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join('');
+    announce('Actividad completada. Puntaje obtenido: ' + score + ' de ' + QUIZ_IDS.length + '.');
+  }
+
+  /* =========================================================
+     EVENTOS GLOBALES
+     ========================================================= */
+  $('#btn-start').addEventListener('click', function () { state.pref = currentPref(); Sound.play('next'); go(1); });
+
+  $('#app').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-next],[data-prev],[data-goto]');
+    if (!b || b.disabled) return;
+    if (b.hasAttribute('data-next')) { Sound.play('next'); go(cur + 1); }
+    else if (b.hasAttribute('data-prev')) { Sound.play('select'); go(cur - 1); }
+    else if (b.hasAttribute('data-goto')) { Sound.play('select'); go(viewIndex(b.getAttribute('data-goto'))); }
+  });
+
+  $('#btn-descargar').addEventListener('click', function () { Sound.play('correct'); });
+
+  function restart() {
+    state = freshState();
+    Object.keys(PRAC).forEach(function (k) { if (PRAC[k].resetAll) PRAC[k].resetAll(); });
+    stopRhythm();
+    Sound.play('select');
+    go(0);
+    announce('Actividad reiniciada.');
+  }
+  $('#btn-retry').addEventListener('click', restart);
+  $('#btn-restart').addEventListener('click', restart);
+  $('#btn-exit').addEventListener('click', function () { Sound.play('next'); go(VIEWS.length - 1); });
+
+  go(0, { initial: true });
+})();
+</script>
+</body>
+</html>
